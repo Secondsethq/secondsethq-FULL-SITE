@@ -1,0 +1,7 @@
+# Canonicalise the homepage: /index.html must not be a second URL
+/index.html            /                 301!
+
+# Clean URLs handled by Netlify pretty-URLs automatically
+
+# Custom 404
+/*    /404.html   404
