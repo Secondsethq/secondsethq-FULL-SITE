@@ -222,7 +222,7 @@ a.cf-city:hover{color:var(--bone)}
   .navdrop-m .nd-all{border-bottom:0;margin-bottom:0}
 }
 
-/* embedded enquiry form in the closing band */
+/* embedded inquiry form in the closing band */
 .ctaband.formband{background:var(--ink);color:var(--bone)}
 .ctaband.formband .sec-h{color:var(--bone)}
 .ctaband.formband .lead{color:var(--taupe)}
@@ -424,10 +424,10 @@ const EFFORT = {
   'areaServed listing the actual service area cities': 0.5,
   'FAQPage schema matching visible on-page questions': 1,
   'Service or Product schema where relevant': 0.5,
-  'A working enquiry form on the page, not just a phone number': 2,
+  'A working inquiry form on the page, not just a phone number': 2,
   'Every call to action links somewhere. No dead buttons': 1,
   'Phone number is a working tel: link on mobile': 0.25,
-  'Form is short enough to finish. Under 12 fields for a first enquiry': 0.5,
+  'Form is short enough to finish. Under 12 fields for a first inquiry': 0.5,
   'Conversion tracking wired to the form, not just pageviews': 1.5,
   'No placeholder or unfinished copy visible anywhere': 1,
   'Primary service term appears at 0.3 to 1.0 percent density': 2,
@@ -514,7 +514,7 @@ function buildDocs(){
   });
 
   r += '-'.repeat(64) + '\n\nWHAT THIS DOES NOT COVER\n\n';
-  r += wrapText('Page speed and responsive behaviour are reported from the server response only. '
+  r += wrapText('Page speed and responsive behavior are reported from the server response only. '
      + 'Run PageSpeed Insights and check the page at 390px width before treating those as final. '
      + 'Local proof was checked by hand against the listings visible on page one of a search for the '
      + 'business name.', 64) + '\n\n';
@@ -605,7 +605,7 @@ function buildDocs(){
   const miss = function(re){ return allChecks.find(function(k){ return re.test(k.label) && k.got < k.pts; }); };
   const red = [];
   if (miss(/noindex/i)) red.push('NOINDEX on the page. Nothing else matters until that is removed.');
-  if (miss(/working enquiry form/i)) red.push('No working enquiry form. Ranking this page would produce nothing.');
+  if (miss(/working inquiry form/i)) red.push('No working inquiry form. Ranking this page would produce nothing.');
   if (miss(/Google Business Profile/i)) red.push('Google Business Profile not claimed or complete. Highest-value single fix.');
   if (miss(/dead buttons/i)) red.push('Dead call-to-action links. Check every button by hand.');
   if (red.length) {
@@ -623,7 +623,7 @@ function buildDocs(){
   ib += '  · Page has ' + DATA.page.words + ' words. ' + (DATA.page.words < 500 ? 'Thin. Content work is unavoidable.' : 'Enough to work with.') + '\n';
   ib += '\nNOT CHECKED AUTOMATICALLY\n';
   ib += '  · Real mobile speed — run PageSpeed Insights\n';
-  ib += '  · Responsive behaviour at 390px — check in dev tools\n';
+  ib += '  · Responsive behavior at 390px — check in dev tools\n';
   ib += '  · Whether FAQ schema text matches the visible questions\n';
   ib += '  · Whether the form actually delivers — submit it\n';
 

@@ -167,7 +167,7 @@ exports.handler = async (event) => {
 
   const c4 = [];
   c4.push({ pts: 4, got: (forms.length || embedForm) ? 4 : 0,
-    label: 'A working enquiry form on the page, not just a phone number',
+    label: 'A working inquiry form on the page, not just a phone number',
     detail: forms.length ? `${forms.length} form element${forms.length === 1 ? '' : 's'} found.` : (embedForm ? 'Embedded third-party form detected.' : 'No form found anywhere on the page.') });
   c4.push({ pts: 3, got: dead.length === 0 ? 3 : 0,
     label: 'Every call to action links somewhere. No dead buttons',
@@ -176,7 +176,7 @@ exports.handler = async (event) => {
     label: 'Phone number is a working tel: link on mobile',
     detail: telLinks ? `${telLinks} tel: link${telLinks === 1 ? '' : 's'} found.` : 'No tel: link found. Confirm the number is tappable.' });
   c4.push({ pts: 2, got: (forms.length && inputs > 0 && inputs < 12) ? 2 : (embedForm ? 1 : 0),
-    label: 'Form is short enough to finish. Under 12 fields for a first enquiry',
+    label: 'Form is short enough to finish. Under 12 fields for a first inquiry',
     detail: forms.length ? `${inputs} visible fields in the first form.` : 'Embedded form — count the fields manually.' });
   c4.push({ pts: 2, got: tracking ? 2 : 0,
     label: 'Conversion tracking wired to the form, not just pageviews',
