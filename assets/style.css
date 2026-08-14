@@ -1128,16 +1128,3 @@ section.formband:not(.close){padding:72px 0}
 @media (prefers-reduced-motion:reduce){.helptip .helptext{transition:none}}
 @media (max-width:520px){.helptip .helptext{width:180px;left:auto;right:0}
   .helptip .helptext::after{left:auto;right:18px}}
-
-
-/* ---- work index: stop cropping the composed card images ----
-   Card art is ~16:9 with text baked in. Row height was driven by panel
-   text (~258px), so a 756px column produced a 2.93:1 box and cover
-   discarded ~40% of the image height, slicing the text. Give the photo
-   the images' own ratio and let the row follow it. ---- */
-.pw-row{max-height:none}
-.pw-photo{aspect-ratio:16/9;height:auto;align-self:stretch}
-.pw-row.pw-left .pw-photo,.pw-row.pw-right .pw-photo{min-height:100%}
-@media(max-width:820px){
-  .pw-photo{aspect-ratio:16/9;height:auto}
-}
