@@ -1106,3 +1106,25 @@ section.formband:not(.close){padding:72px 0}
 .qa-foot a:hover{color:var(--coral);border-bottom-color:var(--coral)}
 @media (prefers-reduced-motion:reduce){.qa-item summary::before{transition:none}}
 @media (max-width:600px){.qa-item summary{padding:16px 38px 16px 0}.qa-answer{padding-right:0}}
+
+/* ---- helptip: base rules were missing, so the tooltip text rendered inline ---- */
+.helptip{position:relative;display:inline-flex;align-items:center;justify-content:center;
+  width:16px;height:16px;margin-left:6px;border:1px solid var(--taupe);border-radius:50%;
+  font-family:var(--mono);font-size:10px;line-height:1;color:var(--label);
+  cursor:help;vertical-align:middle;user-select:none}
+.helptip:hover,.helptip:focus-visible{border-color:var(--teal);color:var(--teal)}
+.helptip:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+.helptip .helptext{
+  position:absolute;bottom:calc(100% + 9px);left:0;z-index:40;
+  width:210px;padding:10px 12px;
+  background:var(--ink);color:var(--bone);
+  font-family:var(--text);font-size:12.5px;line-height:1.45;letter-spacing:0;
+  text-align:left;text-transform:none;font-weight:400;
+  opacity:0;visibility:hidden;transition:opacity .16s ease,visibility .16s ease;
+  pointer-events:none}
+.helptip .helptext::after{
+  content:"";position:absolute;top:100%;left:18px;
+  border:5px solid transparent;border-top-color:var(--ink)}
+@media (prefers-reduced-motion:reduce){.helptip .helptext{transition:none}}
+@media (max-width:520px){.helptip .helptext{width:180px;left:auto;right:0}
+  .helptip .helptext::after{left:auto;right:18px}}
