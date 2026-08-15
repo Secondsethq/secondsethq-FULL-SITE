@@ -2,5 +2,8 @@ User-agent: *
 Allow: /
 Disallow: /tools/
 Disallow: /.netlify/
+Disallow: /DTH/
+Disallow: /dth-buybox
+Disallow: /dth-onboarding
 
 Sitemap: https://secondsethq.com/sitemap.xml

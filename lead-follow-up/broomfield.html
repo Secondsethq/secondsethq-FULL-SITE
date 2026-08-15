@@ -397,7 +397,7 @@ a.cf-city:hover{color:var(--bone)}
   <h1><span class="mask"><span>Lead&nbsp;follow-up</span></span> <span class="mask"><span>that&nbsp;turns</span></span> <span class="mask"><span>Broomfield</span></span><br><span class="mask"><span>leads</span></span> <span class="mask"><span>into</span></span> <em class="mask"><span>booked&nbsp;clients.</span></em></h1>
   <p class="sub reveal">Most Broomfield businesses don't have a lead problem. They have a follow-up problem. Whether you run a professional office, a home-service company, or a growing local business, we build the funnels and automations that catch every inquiry, so nothing slips while you're busy with a client.</p>
   <div class="btns reveal">
-    <a class="btn coral" data-cal-link="secondsethq/30min" data-cal-namespace="30min" data-cal-config='{"layout":"month_view"}' style="cursor:pointer" onclick="gtag('event','book_call_click',{location:'hero'})">Book a free call →</a>
+    <a href="/contact" class="btn coral" data-cal-link="secondsethq/30min" data-cal-namespace="30min" data-cal-config='{"layout":"month_view"}' style="cursor:pointer" onclick="if(window.Cal){event.preventDefault();}gtag('event','book_call_click',{location:'hero'})">Book a free call →</a>
     <a class="btn ghost" href="#build">See how it works</a>
   </div>
 </div></header>
@@ -438,7 +438,7 @@ a.cf-city:hover{color:var(--bone)}
     <div class="inbox reveal">
       <div class="inbox-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="title">Inbox · 1 new message</span></div>
       <div class="mail-head"><div class="mail-from"><div class="mail-avatar"><svg viewBox="0 0 100 100"><circle cx="42" cy="50" r="30" fill="#fff"/><circle cx="62" cy="50" r="25" fill="none" stroke="#F44E2D" stroke-width="9"/></svg></div><div class="mail-fromtxt"><div class="n">Ridge &amp; Bloom Events</div><div class="e">hello@ridgeandbloom.com</div></div></div><div class="mail-subj">Thanks, Sarah, we've got you ✨</div></div>
-      <div class="mail-body"><p>Hi Sarah,</p><p>Thanks for reaching out about your inquiry in Broomfield. We're so glad you did. <span class="accent">Your message just landed with us and we're on it.</span></p><p>Someone from our team will personally reply within one business day. In the meantime, if it's easier to just grab a time:</p><a class="mail-cta" data-cal-link="secondsethq/30min" data-cal-namespace="30min" data-cal-config='{"layout":"month_view"}' style="cursor:pointer">Book a 15-min call →</a><p>Talk soon,</p><div class="mail-sig"><div class="sn">The Ridge &amp; Bloom Team</div><div class="sr">Broomfield, CO · ridgeandbloom.com · (303) 555-0142</div></div></div>
+      <div class="mail-body"><p>Hi Sarah,</p><p>Thanks for reaching out about your inquiry in Broomfield. We're so glad you did. <span class="accent">Your message just landed with us and we're on it.</span></p><p>Someone from our team will personally reply within one business day. In the meantime, if it's easier to just grab a time:</p><a href="/contact" class="mail-cta" data-cal-link="secondsethq/30min" data-cal-namespace="30min" data-cal-config='{"layout":"month_view"}' style="cursor:pointer" onclick="if(window.Cal){event.preventDefault();}">Book a 15-min call →</a><p>Talk soon,</p><div class="mail-sig"><div class="sn">The Ridge &amp; Bloom Team</div><div class="sr">Broomfield, CO · ridgeandbloom.com · (303) 555-0142</div></div></div>
     </div>
     <div class="reveal"><p class="sp-copy" style="padding-top:0"><strong style="font-family:var(--display);font-size:17px">Same email, everywhere.</strong></p><p style="font-size:15px;color:var(--rust);margin-top:8px">Most Broomfield leads check email on their phone first, so every email we build is designed to look right there too. Scroll on to see a seasonal campaign in action. ↓</p></div>
   </div>
@@ -462,9 +462,9 @@ a.cf-city:hover{color:var(--bone)}
       <div class="phone">
         <div class="phone-notch"></div>
         <div class="phone-screen">
-          <div class="ph-status"><span>9:41</span><span>✦ ▂▄▆</span></div>
+          <div class="ph-status" aria-hidden="true"><span>9:41</span><span>✦ ▂▄▆</span></div>
           <div class="ph-scroll" id="phoneScroll">
-            <iframe id="spaFrame" srcdoc="<!DOCTYPE html>
+            <iframe id="spaFrame" title="Preview of a mobile-first website we built" srcdoc="<!DOCTYPE html>
 <html lang=&quot;en&quot;>
 <head>
 <meta charset=&quot;utf-8&quot;>
@@ -864,7 +864,7 @@ footer .logo{color:var(--bone)}
     <div class="qa"><h4>What does it cost?</h4><p>It depends how much of the system you need. Send us a few details and we'll come back with a real number, usually same day.</p></div>
   </div>
 
-  <p class="byline">Written by <a href="https://secondsethq.com/about.html">Denessa Appleton</a> and <a href="https://secondsethq.com/about.html">Brittany Hadfield</a>, Second Set &middot; Vista, CA and Milliken, CO<br>Last updated <time datetime="2026-08-08">August 8, 2026</time></p>
+  <p class="byline">Written by <a href="/about">Denessa Appleton</a> and <a href="/about">Brittany Hadfield</a>, Second Set &middot; Vista, CA and Milliken, CO<br>Last updated <time datetime="2026-08-08">August 8, 2026</time></p>
 </div></section>
 
 <!-- CTA -->
@@ -884,7 +884,7 @@ footer .logo{color:var(--bone)}
     <h2 class="sec-h"><span class="mask"><span>Stop</span></span> <span class="mask"><span>losing</span></span> <span class="mask"><span>Broomfield</span></span> <span class="mask"><span>leads</span></span> <span class="mask"><span>to</span></span> <em><span class="mask"><span>slow</span></span> <span class="mask"><span>replies.</span></span></em></h2>
     <p class="reveal">Tell us what's slipping and we'll show you exactly how we'd fix it, whether you hire us or not. First call's free.</p>
     <div class="btns reveal" style="justify-content:center">
-      <a class="btn cream" data-cal-link="secondsethq/30min" data-cal-namespace="30min" data-cal-config='{"layout":"month_view"}' style="cursor:pointer" onclick="gtag('event','book_call_click',{location:'footer_cta'})">Book a free call →</a>
+      <a href="/contact" class="btn cream" data-cal-link="secondsethq/30min" data-cal-namespace="30min" data-cal-config='{"layout":"month_view"}' style="cursor:pointer" onclick="if(window.Cal){event.preventDefault();}gtag('event','book_call_click',{location:'footer_cta'})">Book a free call →</a>
       <button class="btn ghost" data-tally-open="b5MpX0" data-tally-layout="modal" data-tally-width="640" data-tally-overlay="1" style="color:#fff;border-color:#fff;cursor:pointer;font-family:inherit" onclick="gtag('event','quote_click',{location:'footer_cta'})">Get a quote</button>
     </div>
   </div>
@@ -1007,7 +1007,7 @@ Cal.ns["30min"]("ui", {"hideEventTypeDetails":false,"layout":"month_view"});
     if(window.Tally&&TALLY_FORM.indexOf('REPLACE')===-1){
       window.Tally.openPopup(TALLY_FORM,{layout:'modal',width:640,hiddenFields:Object.assign({email:e},d)});
       show('Opening the form so you can confirm where to send it.');
-    } else { show('Thanks. We will be in touch at '+e+'.'); }
+    }else{ show('The form did not load. Please email hello@secondsethq.com and we will send your figures over.',true); return; }
     inp.value='';
   });
   inp.addEventListener('keydown',function(ev){if(ev.key==='Enter'){ev.preventDefault();btn.click();}});
