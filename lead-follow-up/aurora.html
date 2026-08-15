@@ -382,13 +382,57 @@ a.cf-city:hover{color:var(--bone)}
   }
 })();
 </script>
+<style>
+/* ---- site nav propagated from the local-seo and web-design city template,
+       15 Aug 2026. Replaces the anchor-only nav so a visitor arriving from
+       search has a route to services, pricing and the rest of the site. ---- */
+.nav-links{display:flex;gap:26px;align-items:center;font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.nav-links a{color:var(--ink);text-decoration:none;opacity:.72;transition:opacity .15s}
+.nav-links a:hover{opacity:1}
+.nav-links .navcta{opacity:1}
+.nav-links .navdrop-t{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;opacity:.72}
+.navdrop:hover .navdrop-t,.navdrop:focus-within .navdrop-t{opacity:1}
+.navdrop-m a{text-transform:none;letter-spacing:0;font-family:var(--body);opacity:1}
+.navdrop{position:relative;display:inline-flex;align-items:center}
+.navdrop-t{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;
+  display:inline-flex;align-items:center;gap:5px;line-height:inherit}
+.navdrop-t::after{content:"";width:0;height:0;border-left:4px solid transparent;
+  border-right:4px solid transparent;border-top:5px solid currentColor;opacity:.55;
+  transition:transform .15s}
+.navdrop:hover .navdrop-t::after,.navdrop:focus-within .navdrop-t::after{transform:rotate(180deg)}
+.navdrop-m{position:absolute;top:calc(100% + 14px);left:50%;transform:translateX(-50%) translateY(-6px);
+  min-width:248px;background:#fff;border:1px solid rgba(8,5,5,.10);border-radius:14px;
+  padding:10px;box-shadow:0 18px 44px rgba(8,5,5,.14);opacity:0;visibility:hidden;
+  transition:opacity .16s,transform .16s;z-index:60}
+.navdrop:hover .navdrop-m,.navdrop:focus-within .navdrop-m{opacity:1;visibility:visible;
+  transform:translateX(-50%) translateY(0)}
+.navdrop-m::before{content:"";position:absolute;top:-14px;left:0;right:0;height:14px}
+.navdrop-m a{display:block;padding:9px 13px;border-radius:9px;font-size:14.5px;
+  color:var(--ink);text-decoration:none;white-space:nowrap}
+.navdrop-m a:hover{background:var(--bone);color:var(--teal)}
+.navdrop-m .nd-all{font-weight:600;border-bottom:1px solid rgba(8,5,5,.09);
+  border-radius:9px 9px 0 0;margin-bottom:5px;padding-bottom:11px}
+@media(max-width:820px){
+.nav-links a:not(.navcta){display:none}
+.nav-links{flex-wrap:wrap;gap:14px 18px;font-size:14px;width:100%;justify-content:flex-start}
+.nav-links a:not(.navcta){display:inline-block}
+.navdrop{position:static}
+.navdrop-m{position:static;transform:none;opacity:1;visibility:visible;min-width:0;
+    box-shadow:none;border:0;background:transparent;padding:6px 0 0;display:none;width:100%}
+.navdrop:focus-within .navdrop-m,.navdrop.open .navdrop-m{display:block;transform:none}
+.navdrop-m a{padding:8px 0;font-size:14px}
+.navdrop-m .nd-all{border-bottom:0;margin-bottom:0}
+}
+</style>
 </head>
 <body>
 <nav><div class="nav-in">
   <a href="https://secondsethq.com" rel="noopener" aria-label="Second Set home"><svg height="30" width="163" viewBox="-2.5 2.0 544.8 100.0" xmlns="http://www.w3.org/2000/svg" aria-label="Second Set"><circle cx="47.52" cy="52.00" r="44.00" fill="#117997"/><circle cx="84.48" cy="52.00" r="37.40" fill="none" stroke="#F44E2D" stroke-width="13.20"/><path d="M334 -17Q189 -17 103.5 45.5Q18 108 15 225H193Q204 123 333 123Q381 123 414.5 141.5Q448 160 448 198Q448 224 427.0 241.5Q406 259 384.5 266.0Q363 273 303 288Q300 289 299.0 289.5Q298 290 296.0 290.5Q294 291 292 291Q246 302 216.5 310.5Q187 319 149.5 336.5Q112 354 90.0 375.0Q68 396 52.5 430.5Q37 465 37 508Q37 618 115.5 673.0Q194 728 321 728Q443 728 520.5 672.0Q598 616 603 508H430Q425 549 395.0 571.5Q365 594 315 594Q269 594 240.5 575.5Q212 557 212 527Q212 493 246.0 477.5Q280 462 374 441Q433 427 471.0 413.5Q509 400 548.5 375.0Q588 350 607.5 310.5Q627 271 627 216Q627 107 544.5 45.0Q462 -17 334 -17Z" transform="translate(152.48,79.36) scale(0.07600,-0.07600)" fill="#080505"/><path d="M289 -15Q165 -15 90.5 61.5Q16 138 16 257Q16 373 89.5 450.0Q163 527 279 527Q384 527 454 463Q546 379 544 214H176Q184 161 213.0 131.5Q242 102 291 102Q354 102 376 153H535Q517 79 449 32Q382 -15 289 -15ZM177 311H379Q375 357 348.5 384.0Q322 411 282 411Q195 411 177 311Z" transform="translate(200.36,79.36) scale(0.07600,-0.07600)" fill="#080505"/><path d="M288 -16Q166 -16 91.0 61.0Q16 138 16.0 255.0Q16 372 90.0 449.0Q164 526 284 526Q386 526 451.0 472.0Q516 418 527 330H370Q353 406 286 406Q234 406 207.5 366.0Q181 326 181 255Q181 185 208.0 145.5Q235 106 286 106Q364 106 375 194H531Q528 103 461.5 43.5Q395 -16 288 -16Z" transform="translate(241.40,79.36) scale(0.07600,-0.07600)" fill="#080505"/><path d="M181 255Q181 184 209.0 142.0Q237 100 289.0 100.0Q341 100 369.5 142.0Q398 184 398.0 255.0Q398 326 369.5 368.5Q341 411 289.0 411.0Q237 411 209.0 369.0Q181 327 181 255ZM487.5 61.0Q412 -16 290.0 -16.0Q168 -16 92.0 61.0Q16 138 16.0 255.0Q16 372 92.0 449.0Q168 526 290.0 526.0Q412 526 487.5 449.0Q563 372 563.0 255.0Q563 138 487.5 61.0Z" transform="translate(281.22,79.36) scale(0.07600,-0.07600)" fill="#080505"/><path d="M39 0V512H196V442H199Q258 527 357 527Q440 527 487.5 473.5Q535 420 535 333V0H372V300Q372 342 351.5 366.5Q331 391 292 391Q252 391 227.0 361.0Q202 331 202 283V0Z" transform="translate(323.71,79.36) scale(0.07600,-0.07600)" fill="#080505"/><path d="M240 -16Q140 -16 78.0 57.0Q16 130 16 256Q16 376 78.5 451.5Q141 527 240 527Q332 527 383 454H386V715H549V0H393V69H391Q341 -16 240 -16ZM282 113Q332 113 361.0 152.5Q390 192 390 256Q390 323 363.0 363.5Q336 404 284 404Q236 404 208.5 364.0Q181 324 181 258Q181 191 208.0 152.0Q235 113 282 113Z" transform="translate(365.51,79.36) scale(0.07600,-0.07600)" fill="#080505"/><path d="M334 -17Q189 -17 103.5 45.5Q18 108 15 225H193Q204 123 333 123Q381 123 414.5 141.5Q448 160 448 198Q448 224 427.0 241.5Q406 259 384.5 266.0Q363 273 303 288Q300 289 299.0 289.5Q298 290 296.0 290.5Q294 291 292 291Q246 302 216.5 310.5Q187 319 149.5 336.5Q112 354 90.0 375.0Q68 396 52.5 430.5Q37 465 37 508Q37 618 115.5 673.0Q194 728 321 728Q443 728 520.5 672.0Q598 616 603 508H430Q425 549 395.0 571.5Q365 594 315 594Q269 594 240.5 575.5Q212 557 212 527Q212 493 246.0 477.5Q280 462 374 441Q433 427 471.0 413.5Q509 400 548.5 375.0Q588 350 607.5 310.5Q627 271 627 216Q627 107 544.5 45.0Q462 -17 334 -17Z" transform="translate(420.76,79.36) scale(0.07600,-0.07600)" fill="#080505"/><path d="M289 -15Q165 -15 90.5 61.5Q16 138 16 257Q16 373 89.5 450.0Q163 527 279 527Q384 527 454 463Q546 379 544 214H176Q184 161 213.0 131.5Q242 102 291 102Q354 102 376 153H535Q517 79 449 32Q382 -15 289 -15ZM177 311H379Q375 357 348.5 384.0Q322 411 282 411Q195 411 177 311Z" transform="translate(468.64,79.36) scale(0.07600,-0.07600)" fill="#080505"/><path d="M242 -6Q164 -6 121.5 25.5Q79 57 79 135V410H11V512H79V674H238V512H331V410H238V170Q238 142 252.5 131.0Q267 120 295 120Q303 120 316.0 120.5Q329 121 331 121V2Q303 -6 242 -6Z" transform="translate(509.68,79.36) scale(0.07600,-0.07600)" fill="#080505"/><circle cx="405.56" cy="64.16" r="11.02" fill="#F0EFE9"/><circle cx="405.56" cy="64.16" r="8.36" fill="#F44E2D"/></svg></a>
-  <div class="links">
-    <a href="#why">Why</a><a href="#build">Funnels</a><a href="#email">Emails</a><a href="#stats">Results</a><a href="#faq">FAQ</a>
-    <a class="navcta" href="tel:+14422919337" onclick="if(typeof gtag==='function')gtag('event','call_click',{location:'nav'})">Call now</a>
+  <div class="nav-links">
+  <a href="/work">Work</a>
+  <div class="navdrop"><button class="navdrop-t" type="button" aria-expanded="false">Services</button><div class="navdrop-m"><a class="nd-all" href="/services">All services</a><a href="https://secondsethq.com/lead-follow-up" aria-current="page">Lead Follow-Up &amp; Funnels</a><a href="https://secondsethq.com/web-design">Website Design</a><a href="https://secondsethq.com/local-seo">Local SEO</a><a href="https://secondsethq.com/email-marketing">Email Marketing</a><a href="https://secondsethq.com/brand-design">Brand &amp; Design</a><a href="https://secondsethq.com/crm-systems">CRM &amp; Systems</a><a href="https://secondsethq.com/bookkeeping">Bookkeeping</a></div></div>
+  <div class="navdrop"><button class="navdrop-t" type="button" aria-expanded="false">Pricing</button><div class="navdrop-m"><a href="https://secondsethq.com/lead-follow-up#pricing-block">Lead Follow-Up &amp; Funnels</a><a href="https://secondsethq.com/web-design#pricing-block">Website Design</a><a href="https://secondsethq.com/local-seo#pricing-block">Local SEO</a><a href="https://secondsethq.com/email-marketing#pricing-block">Email Marketing</a><a href="https://secondsethq.com/brand-design#pricing-block">Brand &amp; Design</a><a href="https://secondsethq.com/crm-systems#pricing-block">CRM &amp; Systems</a><a href="https://secondsethq.com/bookkeeping#pricing-block">Bookkeeping</a></div></div>
+  <a class="navcta" href="tel:+14422919337" onclick="if(typeof gtag==='function')gtag('event','call_click',{location:'nav'})">Call now</a>
   </div>
 </div></nav>
 
@@ -397,7 +441,7 @@ a.cf-city:hover{color:var(--bone)}
   <h1><span class="mask"><span>Lead&nbsp;follow-up</span></span> <span class="mask"><span>that&nbsp;turns</span></span> <span class="mask"><span>Aurora</span></span><br><span class="mask"><span>leads</span></span> <span class="mask"><span>into</span></span> <em class="mask"><span>booked&nbsp;clients.</span></em></h1>
   <p class="sub reveal">Most Aurora businesses don't have a lead problem. They have a follow-up problem. Whether you're a contractor, a home-service company, a clinic, or a neighborhood business, we build the funnels and automations that catch every inquiry, so nothing slips while you're busy with a customer.</p>
   <div class="btns reveal">
-    <a href="/contact" class="btn coral" data-cal-link="secondsethq/30min" data-cal-namespace="30min" data-cal-config='{"layout":"month_view"}' style="cursor:pointer" onclick="if(window.Cal){event.preventDefault();}gtag('event','book_call_click',{location:'hero'})">Book a free call →</a>
+    <a class="btn coral" data-cal-link="secondsethq/30min" data-cal-namespace="30min" data-cal-config='{"layout":"month_view"}' style="cursor:pointer" onclick="gtag('event','book_call_click',{location:'hero'})">Book a free call →</a>
     <a class="btn ghost" href="#build">See how it works</a>
   </div>
 </div></header>
@@ -415,7 +459,7 @@ a.cf-city:hover{color:var(--bone)}
 <!-- FUNNEL -->
 <section id="build" class="reveal-group"><div class="wrap">
   <div class="mlabel eyeb">How it works</div>
-  <h2 class="sec-h"><span class="mask"><span>What</span></span> <span class="mask"><span>an</span></span> <span class="mask"><span>Aurora</span></span> <em><span class="mask"><span>funnel</span></span></em> <span class="mask"><span>looks</span></span> <span class="mask"><span>like.</span></span></h2>
+  <h2 class="sec-h"><span class="mask"><span>What</span></span> <span class="mask"><span>a</span></span> <span class="mask"><span>Aurora</span></span> <em><span class="mask"><span>funnel</span></span></em> <span class="mask"><span>looks</span></span> <span class="mask"><span>like.</span></span></h2>
   <p class="lead reveal">A lead comes in. From that second, the system takes over, so you never lose one to a slow reply again.</p>
   <div class="funnel">
     <div class="fstep reveal"><div class="fnum c1">1</div><div class="fstep-inner"><h3>A lead comes in</h3><div class="ftxt">Someone fills out your form, texts, or calls, whether that comes from your website, an Instagram DM, or a Google search at 9pm.</div><span class="ftag">Trigger · any source</span></div></div>
@@ -438,7 +482,7 @@ a.cf-city:hover{color:var(--bone)}
     <div class="inbox reveal">
       <div class="inbox-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="title">Inbox · 1 new message</span></div>
       <div class="mail-head"><div class="mail-from"><div class="mail-avatar"><svg viewBox="0 0 100 100"><circle cx="42" cy="50" r="30" fill="#fff"/><circle cx="62" cy="50" r="25" fill="none" stroke="#F44E2D" stroke-width="9"/></svg></div><div class="mail-fromtxt"><div class="n">Ridge &amp; Bloom Events</div><div class="e">hello@ridgeandbloom.com</div></div></div><div class="mail-subj">Thanks, Sarah, we've got you ✨</div></div>
-      <div class="mail-body"><p>Hi Sarah,</p><p>Thanks for reaching out about your inquiry in Aurora. We're so glad you did. <span class="accent">Your message just landed with us and we're on it.</span></p><p>Someone from our team will personally reply within one business day. In the meantime, if it's easier to just grab a time:</p><a href="/contact" class="mail-cta" data-cal-link="secondsethq/30min" data-cal-namespace="30min" data-cal-config='{"layout":"month_view"}' style="cursor:pointer" onclick="if(window.Cal){event.preventDefault();}">Book a 15-min call →</a><p>Talk soon,</p><div class="mail-sig"><div class="sn">The Ridge &amp; Bloom Team</div><div class="sr">Aurora, CO · ridgeandbloom.com · (303) 555-0142</div></div></div>
+      <div class="mail-body"><p>Hi Sarah,</p><p>Thanks for reaching out about your inquiry in Aurora. We're so glad you did. <span class="accent">Your message just landed with us and we're on it.</span></p><p>Someone from our team will personally reply within one business day. In the meantime, if it's easier to just grab a time:</p><a class="mail-cta" data-cal-link="secondsethq/30min" data-cal-namespace="30min" data-cal-config='{"layout":"month_view"}' style="cursor:pointer">Book a 15-min call →</a><p>Talk soon,</p><div class="mail-sig"><div class="sn">The Ridge &amp; Bloom Team</div><div class="sr">Aurora, CO · ridgeandbloom.com · (303) 555-0142</div></div></div>
     </div>
     <div class="reveal"><p class="sp-copy" style="padding-top:0"><strong style="font-family:var(--display);font-size:17px">Same email, everywhere.</strong></p><p style="font-size:15px;color:var(--rust);margin-top:8px">Most Aurora leads check email on their phone first, so every email we build is designed to look right there too. Scroll on to see a seasonal campaign in action. ↓</p></div>
   </div>
@@ -462,9 +506,9 @@ a.cf-city:hover{color:var(--bone)}
       <div class="phone">
         <div class="phone-notch"></div>
         <div class="phone-screen">
-          <div class="ph-status" aria-hidden="true"><span>9:41</span><span>✦ ▂▄▆</span></div>
+          <div class="ph-status"><span>9:41</span><span>✦ ▂▄▆</span></div>
           <div class="ph-scroll" id="phoneScroll">
-            <iframe id="spaFrame" title="Preview of a mobile-first website we built" srcdoc="<!DOCTYPE html>
+            <iframe id="spaFrame" srcdoc="<!DOCTYPE html>
 <html lang=&quot;en&quot;>
 <head>
 <meta charset=&quot;utf-8&quot;>
@@ -864,7 +908,7 @@ footer .logo{color:var(--bone)}
     <div class="qa"><h4>What does it cost?</h4><p>It depends how much of the system you need. Send us a few details and we'll come back with a real number, usually same day.</p></div>
   </div>
 
-  <p class="byline">Written by <a href="/about">Denessa Appleton</a> and <a href="/about">Brittany Hadfield</a>, Second Set &middot; Vista, CA and Milliken, CO<br>Last updated <time datetime="2026-08-08">August 8, 2026</time></p>
+  <p class="byline">Written by <a href="https://secondsethq.com/about.html">Denessa Appleton</a> and <a href="https://secondsethq.com/about.html">Brittany Hadfield</a>, Second Set &middot; Vista, CA and Milliken, CO<br>Last updated <time datetime="2026-08-08">August 8, 2026</time></p>
 </div></section>
 
 <!-- CTA -->
@@ -884,7 +928,7 @@ footer .logo{color:var(--bone)}
     <h2 class="sec-h"><span class="mask"><span>Stop</span></span> <span class="mask"><span>losing</span></span> <span class="mask"><span>Aurora</span></span> <span class="mask"><span>leads</span></span> <span class="mask"><span>to</span></span> <em><span class="mask"><span>slow</span></span> <span class="mask"><span>replies.</span></span></em></h2>
     <p class="reveal">Tell us what's slipping and we'll show you exactly how we'd fix it, whether you hire us or not. First call's free.</p>
     <div class="btns reveal" style="justify-content:center">
-      <a href="/contact" class="btn cream" data-cal-link="secondsethq/30min" data-cal-namespace="30min" data-cal-config='{"layout":"month_view"}' style="cursor:pointer" onclick="if(window.Cal){event.preventDefault();}gtag('event','book_call_click',{location:'footer_cta'})">Book a free call →</a>
+      <a class="btn cream" data-cal-link="secondsethq/30min" data-cal-namespace="30min" data-cal-config='{"layout":"month_view"}' style="cursor:pointer" onclick="gtag('event','book_call_click',{location:'footer_cta'})">Book a free call →</a>
       <button class="btn ghost" data-tally-open="b5MpX0" data-tally-layout="modal" data-tally-width="640" data-tally-overlay="1" style="color:#fff;border-color:#fff;cursor:pointer;font-family:inherit" onclick="gtag('event','quote_click',{location:'footer_cta'})">Get a quote</button>
     </div>
   </div>
@@ -1007,7 +1051,7 @@ Cal.ns["30min"]("ui", {"hideEventTypeDetails":false,"layout":"month_view"});
     if(window.Tally&&TALLY_FORM.indexOf('REPLACE')===-1){
       window.Tally.openPopup(TALLY_FORM,{layout:'modal',width:640,hiddenFields:Object.assign({email:e},d)});
       show('Opening the form so you can confirm where to send it.');
-    }else{ show('The form did not load. Please email hello@secondsethq.com and we will send your figures over.',true); return; }
+    } else { show('Thanks. We will be in touch at '+e+'.'); }
     inp.value='';
   });
   inp.addEventListener('keydown',function(ev){if(ev.key==='Enter'){ev.preventDefault();btn.click();}});
@@ -1078,5 +1122,27 @@ Cal.ns["30min"]("ui", {"hideEventTypeDetails":false,"layout":"month_view"});
   });
 })();
 </script>
+<script>
+/* dropdown: tap to open on small screens, hover/focus on desktop */
+(function(){
+  document.querySelectorAll('.navdrop').forEach(function(d){
+    var t=d.querySelector('.navdrop-t');
+    if(!t) return;
+    t.addEventListener('click',function(e){
+      var m=d.querySelector('.navdrop-m');
+      /* stacked layout means mobile, whatever the breakpoint; desktop uses hover */
+      if(!m||getComputedStyle(m).position!=='static') return;
+      e.preventDefault();
+      var open=d.classList.toggle('open');
+      t.setAttribute('aria-expanded',open?'true':'false');
+    });
+  });
+  document.addEventListener('click',function(e){
+    document.querySelectorAll('.navdrop.open').forEach(function(d){
+      if(!d.contains(e.target)){d.classList.remove('open');
+        var t=d.querySelector('.navdrop-t'); if(t) t.setAttribute('aria-expanded','false');}
+    });
+  });
+})();</script>
 </body>
 </html>
