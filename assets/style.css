@@ -1128,3 +1128,12 @@ section.formband:not(.close){padding:72px 0}
 @media (prefers-reduced-motion:reduce){.helptip .helptext{transition:none}}
 @media (max-width:520px){.helptip .helptext{width:180px;left:auto;right:0}
   .helptip .helptext::after{left:auto;right:18px}}
+
+/* ---- work page panels: background-image replaced with a real <img> so the
+       browser can lazy-load them. Added 15 Aug 2026. The div keeps its own
+       sizing rules (aspect-ratio, min-height, order); the img just fills it.
+       object-fit:cover + object-position:center reproduce the previous
+       background-size:cover + background-position:center exactly. ---- */
+.pw-photo{position:relative;overflow:hidden}
+.pw-photo img{position:absolute;inset:0;display:block;width:100%;height:100%;
+  object-fit:cover;object-position:center}
