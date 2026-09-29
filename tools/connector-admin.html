@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Connector Admin — Second Set (internal)</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='42' cy='50' r='30' fill='%23117997'/%3E%3Ccircle cx='62' cy='50' r='25' fill='none' stroke='%23F44E2D' stroke-width='9'/%3E%3C/svg%3E">
+<style>
+:root{--bone:#F0EFE9;--ink:#080505;--teal:#117997;--coral:#F44E2D;--label:#6E635B;--rust:#804C3E;--line:rgba(8,5,5,.12);
+--ok:#1d7a3e;--okbg:#e3f3e8;--bad:#b3261e;--badbg:#fbe4e2;--warn:#8a5a00;--warnbg:#fdf0d2;
+--body:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;--mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bone);color:var(--ink);font:15px/1.5 var(--body);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1080px;margin:0 auto;padding:0 16px 60px}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 0;border-bottom:1px solid var(--line);margin-bottom:18px;flex-wrap:wrap}
+h1{font-size:20px;font-weight:700;letter-spacing:-.01em}
+h1 small{font:12px var(--mono);color:var(--label);font-weight:400;margin-left:6px}
+h2{font-size:17px;margin:0 0 12px}
+nav.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
+nav.tabs button{background:transparent;border:1px solid var(--line);color:var(--ink);padding:8px 14px;border-radius:6px;font:inherit;cursor:pointer}
+nav.tabs button[aria-selected=true]{background:#fff;border-color:var(--ink);font-weight:600}
+.card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:16px;margin-bottom:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
+label{display:block;font-size:12px;color:var(--label);font-family:var(--mono);text-transform:uppercase;letter-spacing:.05em}
+input,select,textarea{display:block;width:100%;margin-top:4px;padding:9px 10px;border:1px solid var(--line);border-radius:6px;font:15px var(--body);background:#fff;color:var(--ink)}
+textarea{min-height:110px;font-family:var(--mono);font-size:13px}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--teal);outline-offset:0;border-color:var(--teal)}
+.btn{display:inline-block;background:var(--ink);color:var(--bone);border:1px solid var(--ink);padding:9px 16px;border-radius:6px;font:600 14px var(--body);cursor:pointer}
+.btn:hover{background:var(--teal);border-color:var(--teal)}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.ghost:hover{background:var(--bone)}
+.btn.small{padding:4px 10px;font-size:13px;font-weight:500}
+.btn.danger{background:transparent;color:var(--bad);border-color:var(--bad)}
+.btn:disabled{opacity:.5;cursor:default}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.actions{margin-top:12px;display:flex;gap:8px;flex-wrap:wrap}
+.key{font:600 15px var(--mono);letter-spacing:.03em;word-break:break-all}
+.badge{display:inline-block;padding:1px 8px;border-radius:20px;font:600 12px var(--mono);text-transform:uppercase;letter-spacing:.03em;background:var(--bone);color:var(--ink)}
+.b-active,.b-ok{background:var(--okbg);color:var(--ok)}
+.b-past_due,.b-stale{background:var(--warnbg);color:var(--warn)}
+.b-canceled,.b-expired,.b-suspended,.b-fail,.b-invalid{background:var(--badbg);color:var(--bad)}
+.b-premium{background:#dff0f5;color:var(--teal)}
+.muted{color:var(--label);font-size:13px}
+.lic-head{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:flex-start}
+.sites{margin-top:8px;display:flex;gap:6px;flex-wrap:wrap}
+.site{font:13px var(--mono);background:var(--bone);border-radius:6px;padding:2px 4px 2px 8px;display:inline-flex;gap:4px;align-items:center}
+.site button{border:0;background:transparent;color:var(--bad);cursor:pointer;font-size:15px;line-height:1;padding:0 4px}
+details summary{cursor:pointer;color:var(--teal);font-size:14px;margin-top:10px}
+.tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;width:100%;min-width:720px;font-size:14px}
+th,td{text-align:left;padding:9px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:12px var(--mono);text-transform:uppercase;color:var(--label);letter-spacing:.05em}
+.chk{display:block;font-size:13px;white-space:nowrap}
+.chk.fail{white-space:normal;color:var(--bad)}
+#toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:var(--ink);color:var(--bone);padding:10px 16px;border-radius:8px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s;max-width:calc(100% - 32px)}
+#toast.show{opacity:1}
+#toast.err{background:var(--bad)}
+.hidden{display:none!important}
+.newkey{margin-top:12px;padding:12px;border:1px dashed var(--teal);border-radius:8px;background:#f4fafb}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>InkSoft Connector <small>license server admin</small></h1>
+    <button class="btn ghost small hidden" id="signout" type="button">Sign out</button>
+  </header>
+
+  <section id="login" class="card">
+    <h2>Admin token</h2>
+    <p class="muted" style="margin-bottom:10px">The ADMIN_TOKEN set in Netlify. Kept in this tab's session storage only.</p>
+    <form id="loginForm" class="row">
+      <input id="token" type="password" autocomplete="current-password" placeholder="Paste token" style="flex:1;min-width:200px;margin:0" required>
+      <button class="btn" type="submit">Unlock</button>
+    </form>
+  </section>
+
+  <main id="app" class="hidden">
+    <nav class="tabs" role="tablist">
+      <button role="tab" data-tab="licenses" aria-selected="true">Licenses</button>
+      <button role="tab" data-tab="health" aria-selected="false">Site health</button>
+      <button role="tab" data-tab="release" aria-selected="false">Release</button>
+      <button role="tab" data-tab="status" aria-selected="false">Status message</button>
+    </nav>
+
+    <!-- LICENSES -->
+    <section data-panel="licenses">
+      <div class="card">
+        <h2>New license</h2>
+        <form id="createForm">
+          <div class="grid">
+            <label>Plan<select name="plan"><option value="premium">Premium</option><option value="basic">Basic</option></select></label>
+            <label>Name<input name="name" autocomplete="off"></label>
+            <label>Email<input name="email" type="email" autocomplete="off"></label>
+            <label>Max live sites<input name="max_sites" type="number" min="0" value="1"></label>
+            <label>Expires (blank = never)<input name="expires" type="date"></label>
+          </div>
+          <label style="margin-top:10px">Note<input name="note" autocomplete="off"></label>
+          <div class="actions"><button class="btn" type="submit">Create key</button></div>
+        </form>
+        <div id="newKey" class="newkey hidden"></div>
+      </div>
+
+      <div class="row" style="margin-bottom:12px">
+        <input id="search" type="search" placeholder="Search key, name, email, site…" style="flex:1;min-width:200px;margin:0">
+        <button class="btn ghost" id="reloadLicenses" type="button">Refresh</button>
+      </div>
+      <p class="muted" id="licCount" style="margin-bottom:8px"></p>
+      <div id="licenses"></div>
+    </section>
+
+    <!-- HEALTH -->
+    <section data-panel="health" class="hidden">
+      <div class="row" style="justify-content:space-between;margin-bottom:12px">
+        <p class="muted">Reports older than 36 hours are flagged stale. Failing sites first.</p>
+        <button class="btn ghost" id="reloadHealth" type="button">Refresh</button>
+      </div>
+      <div class="card tablewrap" style="padding:0">
+        <table>
+          <thead><tr><th>Site</th><th>License</th><th>Version</th><th>Last report</th><th>Checks</th></tr></thead>
+          <tbody id="healthRows"><tr><td colspan="5" class="muted">Loading…</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- RELEASE -->
+    <section data-panel="release" class="hidden">
+      <div class="card">
+        <h2>Current release</h2>
+        <div id="currentRelease" class="muted">Loading…</div>
+      </div>
+      <div class="card">
+        <h2>Upload a release</h2>
+        <form id="releaseForm">
+          <label>Plugin zip<input name="zip" type="file" accept=".zip,application/zip" required></label>
+          <div class="grid" style="margin-top:10px">
+            <label>Version<input name="version" placeholder="0.9.0" required pattern="\d+\.\d+(\.\d+)?([\-.+][0-9A-Za-z.\-]+)?"></label>
+            <label>Requires WP<input name="requires" placeholder="6.0"></label>
+            <label>Requires PHP<input name="requires_php" placeholder="7.4" value="7.4"></label>
+            <label>Tested up to<input name="tested" placeholder="6.6"></label>
+          </div>
+          <label style="margin-top:10px">Changelog (HTML)<textarea name="changelog_html" placeholder="<ul><li>What changed</li></ul>"></textarea></label>
+          <div class="actions"><button class="btn" type="submit" id="releaseBtn">Publish release</button></div>
+          <p class="muted" style="margin-top:8px">Every licensed site sees this as an update within about 12 hours. Keep the zip under about 4.4 MB.</p>
+        </form>
+      </div>
+    </section>
+
+    <!-- STATUS -->
+    <section data-panel="status" class="hidden">
+      <div class="card">
+        <h2>Public status message</h2>
+        <p class="muted" style="margin-bottom:10px">Shown to admins of every connected site. Leave empty when all is well.</p>
+        <form id="statusForm">
+          <label>Message<input name="message" maxlength="500" placeholder="e.g. InkSoft's API is slow today — catalog refreshes may be delayed."></label>
+          <div class="actions">
+            <button class="btn" type="submit">Save</button>
+            <button class="btn ghost" type="button" id="clearStatus">Clear</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+</div>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  'use strict';
+  var API = '/.netlify/functions/connector';
+  var TK = 'ss_connector_admin_token';
+  var token = '';
+  var licenses = [];
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+
+  function ss(get, val) {
+    try {
+      if (get) return sessionStorage.getItem(TK) || '';
+      if (val) sessionStorage.setItem(TK, val); else sessionStorage.removeItem(TK);
+    } catch (e) { return ''; }
+  }
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function toast(msg, err) {
+    var t = $('#toast');
+    t.textContent = msg; t.className = 'show' + (err ? ' err' : '');
+    clearTimeout(toast.t); toast.t = setTimeout(function () { t.className = ''; }, 3200);
+  }
+  function ago(iso) {
+    if (!iso) return 'never';
+    var m = Math.round((Date.now() - Date.parse(iso)) / 60000);
+    if (m < 60) return m + ' min ago';
+    var h = Math.round(m / 60);
+    return h < 48 ? h + ' h ago' : Math.round(h / 24) + ' days ago';
+  }
+  function day(iso) { return iso ? iso.slice(0, 10) : ''; }
+  function badge(v, cls) { return '<span class="badge b-' + esc(cls || v) + '">' + esc(String(v).replace('_', ' ')) + '</span>'; }
+
+  async function api(action, body, method) {
+    var opts = { method: method || (body ? 'POST' : 'GET'), headers: { authorization: 'Bearer ' + token } };
+    if (body) { opts.headers['content-type'] = 'application/json'; opts.body = JSON.stringify(body); }
+    var res = await fetch(API + '?action=' + encodeURIComponent(action), opts);
+    var data = {};
+    try { data = await res.json(); } catch (e) { data = { ok: false, message: 'Bad response (' + res.status + ')' }; }
+    if (res.status === 401 || res.status === 503) { signOut(); toast(data.message || 'Unauthorized', true); throw new Error('auth'); }
+    if (!res.ok || data.ok === false) { throw new Error(data.message || ('Error ' + res.status)); }
+    return data;
+  }
+  function fail(e) { if (e && e.message !== 'auth') toast(e.message || 'Something went wrong', true); }
+
+  function copy(text, btn) {
+    var done = function () { var o = btn.textContent; btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = o; }, 1400); };
+    if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(done, function () { prompt('Copy the key:', text); });
+    else prompt('Copy the key:', text);
+  }
+
+  /* ---- auth ---- */
+  function signIn(t) {
+    token = t; ss(false, t);
+    $('#login').classList.add('hidden'); $('#app').classList.remove('hidden'); $('#signout').classList.remove('hidden');
+    loadLicenses();
+  }
+  function signOut() {
+    token = ''; ss(false, '');
+    $('#login').classList.remove('hidden'); $('#app').classList.add('hidden'); $('#signout').classList.add('hidden');
+  }
+  $('#loginForm').addEventListener('submit', function (e) { e.preventDefault(); signIn($('#token').value.trim()); $('#token').value = ''; });
+  $('#signout').addEventListener('click', signOut);
+
+  /* ---- tabs ---- */
+  var loaders = { licenses: loadLicenses, health: loadHealth, release: loadRelease, status: loadStatus };
+  document.querySelectorAll('nav.tabs button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      document.querySelectorAll('nav.tabs button').forEach(function (x) { x.setAttribute('aria-selected', String(x === b)); });
+      document.querySelectorAll('[data-panel]').forEach(function (p) { p.classList.toggle('hidden', p.dataset.panel !== b.dataset.tab); });
+      loaders[b.dataset.tab]();
+    });
+  });
+
+  /* ---- licenses ---- */
+  async function loadLicenses() {
+    try { licenses = (await api('admin_list')).licenses || []; renderLicenses(); } catch (e) { fail(e); }
+  }
+  function renderLicenses() {
+    var q = $('#search').value.trim().toLowerCase();
+    var list = licenses.filter(function (l) {
+      if (!q) return true;
+      return [l.key, l.name, l.email, l.note, l.stripe_customer, l.stripe_subscription].concat(l.sites || [], l.staging_sites || [])
+        .some(function (v) { return v && String(v).toLowerCase().indexOf(q) !== -1; });
+    });
+    $('#licCount').textContent = list.length + ' of ' + licenses.length + ' license' + (licenses.length === 1 ? '' : 's');
+    $('#licenses').innerHTML = list.map(licCard).join('') || '<p class="muted">No licenses match.</p>';
+  }
+  function licCard(l) {
+    var st = l.status_effective || l.status;
+    var sites = (l.sites || []).map(function (s) {
+      var info = (l.site_info || {})[s];
+      return '<span class="site" title="' + esc(info ? 'v' + info.version + ' · WP ' + info.wp + ' · PHP ' + info.php + ' · seen ' + ago(info.last_seen) : '') + '">' + esc(s)
+        + '<button type="button" data-remove-site="' + esc(s) + '" data-key="' + esc(l.key) + '" aria-label="Remove ' + esc(s) + '">&times;</button></span>';
+    }).join('');
+    var staging = (l.staging_sites || []).length ? '<p class="muted" style="margin-top:6px">Staging (free): ' + esc(l.staging_sites.join(', ')) + '</p>' : '';
+    return '<div class="card" data-lic="' + esc(l.key) + '">'
+      + '<div class="lic-head"><div><div class="key">' + esc(l.key) + '</div>'
+      + '<div style="margin-top:4px">' + esc(l.name || '—') + (l.email ? ' · <a href="mailto:' + esc(l.email) + '">' + esc(l.email) + '</a>' : '') + '</div></div>'
+      + '<div class="row">' + badge(l.plan, l.plan === 'premium' ? 'premium' : 'plan') + badge(st)
+      + '<button class="btn ghost small" type="button" data-copy="' + esc(l.key) + '">Copy key</button></div></div>'
+      + '<p class="muted" style="margin-top:8px">Sites ' + (l.sites || []).length + ' / ' + esc(l.max_sites)
+      + ' · created ' + esc(day(l.created)) + ' · expires ' + esc(day(l.expires) || 'never')
+      + (l.stripe_subscription ? ' · Stripe ' + esc(l.stripe_subscription) : '') + '</p>'
+      + (sites ? '<div class="sites">' + sites + '</div>' : '') + staging
+      + (l.note ? '<p class="muted" style="margin-top:6px">Note: ' + esc(l.note) + '</p>' : '')
+      + '<details><summary>Edit</summary><form data-edit="' + esc(l.key) + '" style="margin-top:10px"><div class="grid">'
+      + '<label>Status<select name="status">' + ['active', 'past_due', 'canceled', 'expired', 'suspended'].map(function (s) {
+          return '<option value="' + s + '"' + (s === l.status ? ' selected' : '') + '>' + s.replace('_', ' ') + '</option>'; }).join('') + '</select></label>'
+      + '<label>Plan<select name="plan"><option value="premium"' + (l.plan === 'premium' ? ' selected' : '') + '>Premium</option><option value="basic"' + (l.plan === 'basic' ? ' selected' : '') + '>Basic</option></select></label>'
+      + '<label>Max live sites<input name="max_sites" type="number" min="0" value="' + esc(l.max_sites) + '"></label>'
+      + '<label>Expires<input name="expires" type="date" value="' + esc(day(l.expires)) + '"></label>'
+      + '<label>Name<input name="name" value="' + esc(l.name) + '"></label>'
+      + '<label>Email<input name="email" type="email" value="' + esc(l.email) + '"></label>'
+      + '</div><label style="margin-top:10px">Note<input name="note" value="' + esc(l.note) + '"></label>'
+      + '<div class="actions"><button class="btn" type="submit">Save</button>'
+      + '<button class="btn danger" type="button" data-reset="' + esc(l.key) + '">Reset all sites</button></div></form></details>'
+      + '</div>';
+  }
+  $('#search').addEventListener('input', renderLicenses);
+  $('#reloadLicenses').addEventListener('click', loadLicenses);
+
+  $('#licenses').addEventListener('click', async function (e) {
+    var t = e.target;
+    if (t.dataset.copy) return copy(t.dataset.copy, t);
+    try {
+      if (t.dataset.removeSite) {
+        if (!confirm('Free the seat on ' + t.dataset.removeSite + '? That site loses Premium until it re-activates.')) return;
+        await api('admin_update', { key: t.dataset.key, remove_site: t.dataset.removeSite });
+        toast('Site removed'); loadLicenses();
+      } else if (t.dataset.reset) {
+        if (!confirm('Remove every site from this key? Each site must re-activate.')) return;
+        await api('admin_update', { key: t.dataset.reset, reset_sites: true });
+        toast('Sites reset'); loadLicenses();
+      }
+    } catch (err) { fail(err); }
+  });
+  $('#licenses').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    var f = e.target, fd = new FormData(f);
+    var body = { key: f.dataset.edit };
+    fd.forEach(function (v, k) { body[k] = v; });
+    body.expires = body.expires || null;
+    try { await api('admin_update', body); toast('Saved'); loadLicenses(); } catch (err) { fail(err); }
+  });
+
+  $('#createForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    var body = {};
+    new FormData(e.target).forEach(function (v, k) { body[k] = v; });
+    body.expires = body.expires || null;
+    try {
+      var lic = (await api('admin_create', body)).license;
+      var box = $('#newKey');
+      box.innerHTML = '<div class="muted">New ' + esc(lic.plan) + ' key for ' + esc(lic.name || lic.email || 'customer') + '</div>'
+        + '<div class="row" style="margin-top:6px"><span class="key">' + esc(lic.key) + '</span>'
+        + '<button class="btn small" type="button" data-copy="' + esc(lic.key) + '">Copy key</button></div>';
+      box.classList.remove('hidden');
+      box.querySelector('button').addEventListener('click', function (ev) { copy(lic.key, ev.target); });
+      e.target.reset();
+      loadLicenses();
+    } catch (err) { fail(err); }
+  });
+
+  /* ---- health ---- */
+  async function loadHealth() {
+    var tb = $('#healthRows');
+    try {
+      var sites = (await api('admin_health')).sites || [];
+      tb.innerHTML = sites.map(function (s) {
+        var checks = Object.keys(s.checks || {}).map(function (n) {
+          var c = s.checks[n];
+          return '<span class="chk' + (c.ok ? '' : ' fail') + '">' + (c.ok ? '&#10003; ' : '&#10007; ') + esc(n)
+            + (c.ms != null ? ' <span class="muted">' + esc(c.ms) + 'ms</span>' : '') + (c.ok || !c.msg ? '' : ' — ' + esc(c.msg)) + '</span>';
+        }).join('') || '<span class="muted">' + (s.never ? 'No report yet' : '—') + '</span>';
+        var state = s.ok === false ? badge('fail') : s.ok ? badge('ok') : '';
+        return '<tr><td><strong>' + esc(s.host) + '</strong>' + (s.staging ? ' <span class="muted">(staging)</span>' : '')
+          + '<div style="margin-top:4px">' + state + (s.stale ? ' ' + badge('stale') : '') + '</div></td>'
+          + '<td>' + esc(s.name || '') + '<div>' + (s.plan ? badge(s.plan, s.plan === 'premium' ? 'premium' : 'plan') + ' ' : '') + badge(s.license_status) + '</div></td>'
+          + '<td>' + esc(s.version || '—') + '</td>'
+          + '<td>' + esc(ago(s.last_report)) + '</td>'
+          + '<td>' + checks + '</td></tr>';
+      }).join('') || '<tr><td colspan="5" class="muted">No sites yet.</td></tr>';
+    } catch (e) { fail(e); tb.innerHTML = '<tr><td colspan="5" class="muted">Could not load.</td></tr>'; }
+  }
+  $('#reloadHealth').addEventListener('click', loadHealth);
+
+  /* ---- release ---- */
+  async function loadRelease() {
+    var box = $('#currentRelease');
+    try {
+      var r = await (await fetch(API + '?action=update')).json();
+      box.innerHTML = r.version
+        ? '<strong>v' + esc(r.version) + '</strong> · published ' + esc(ago(r.released)) + ' · requires WP ' + esc(r.requires || '?')
+          + ', PHP ' + esc(r.requires_php || '?') + ' · tested ' + esc(r.tested || '?')
+        : 'Nothing published yet.';
+    } catch (e) { box.textContent = 'Could not load.'; }
+  }
+  $('#releaseForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var f = e.target, file = f.zip.files[0];
+    if (!file) return;
+    if (file.size > 4.4 * 1024 * 1024) return toast('Zip is too large (limit about 4.4 MB: Netlify caps request bodies at 6 MB).', true);
+    var btn = $('#releaseBtn'); btn.disabled = true; btn.textContent = 'Uploading…';
+    var reader = new FileReader();
+    reader.onload = async function () {
+      var b64 = String(reader.result).split(',')[1] || '';
+      try {
+        var r = await api('admin_release', {
+          version: f.version.value.trim(), requires: f.requires.value.trim(), requires_php: f.requires_php.value.trim(),
+          tested: f.tested.value.trim(), changelog_html: f.changelog_html.value, zip_base64: b64
+        });
+        toast('Published v' + r.release.version); f.reset(); loadRelease();
+      } catch (err) { fail(err); }
+      btn.disabled = false; btn.textContent = 'Publish release';
+    };
+    reader.onerror = function () { toast('Could not read the file.', true); btn.disabled = false; btn.textContent = 'Publish release'; };
+    reader.readAsDataURL(file);
+  });
+
+  /* ---- status ---- */
+  async function loadStatus() {
+    try { var r = await (await fetch(API + '?action=status')).json(); $('#statusForm').message.value = r.message || ''; } catch (e) { /* ignore */ }
+  }
+  async function saveStatus(msg) {
+    try { await api('admin_status', { message: msg }); toast(msg ? 'Status message saved' : 'Status cleared'); $('#statusForm').message.value = msg; } catch (e) { fail(e); }
+  }
+  $('#statusForm').addEventListener('submit', function (e) { e.preventDefault(); saveStatus(e.target.message.value.trim()); });
+  $('#clearStatus').addEventListener('click', function () { saveStatus(''); });
+
+  var saved = ss(true);
+  if (saved) signIn(saved);
+})();
+</script>
+</body>
+</html>
