@@ -1,5 +1,5 @@
 /**
- * Second Set InkSoft Connector — daily watch.
+ * Second Set Connector for InkSoft: daily watch.
  * Emails ALERT_EMAIL (via Resend) a digest of:
  *   - licensed, non-staging sites whose last health report is older than 36h, missing, or failing
  *   - licenses (active/past_due) expiring within 7 days

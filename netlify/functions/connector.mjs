@@ -1,5 +1,5 @@
 /**
- * Second Set InkSoft Connector — license, update and health server.
+ * Second Set Connector for InkSoft: license, update and health server.
  *
  * URL: https://secondsethq.com/.netlify/functions/connector?action=<action>
  * Spec: the "Server" section of the plugin build contract. See CONNECTOR.md for setup.
@@ -599,15 +599,15 @@ export function makeHandler({ getStore, fetch, env = {}, now = () => Date.now() 
           const planLabel = plan === 'premium' ? 'Premium' : 'Basic';
           await sendEmail({
             to: email,
-            subject: 'Your Second Set InkSoft Connector license key',
+            subject: 'Your Second Set Connector for InkSoft license key',
             html: `<p>Hi${name ? ' ' + esc(name.split(' ')[0]) : ''},</p>`
-              + `<p>Thanks for buying the Second Set InkSoft Connector (${planLabel}). Your license key:</p>`
+              + `<p>Thanks for buying the Second Set Connector for InkSoft (${planLabel}). Your license key:</p>`
               + `<p style="font:600 18px/1.4 monospace;letter-spacing:.04em">${esc(lic.key)}</p>`
-              + `<p>In WordPress, open <b>InkSoft Connector &rarr; License</b>, paste the key and click Activate. `
+              + `<p>In WordPress, open <b>Second Set &rarr; License</b>, paste the key and click Activate. `
               + `It covers ${lic.max_sites} live site${lic.max_sites === 1 ? '' : 's'}; staging and local copies don't count.</p>`
               + `<p>Questions? Just reply to this email.</p><p>Second Set</p>`,
-            text: `Thanks for buying the Second Set InkSoft Connector (${planLabel}).\n\nYour license key: ${lic.key}\n\n`
-              + `In WordPress, open InkSoft Connector > License, paste the key and click Activate.\n`,
+            text: `Thanks for buying the Second Set Connector for InkSoft (${planLabel}).\n\nYour license key: ${lic.key}\n\n`
+              + `In WordPress, open Second Set > License, paste the key and click Activate.\n`,
           });
           if (env.ALERT_EMAIL) {
             await sendEmail({ to: env.ALERT_EMAIL, subject: `New ${planLabel} license: ${email}`,

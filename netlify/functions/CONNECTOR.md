@@ -1,6 +1,6 @@
-# InkSoft Connector license server
+# Second Set Connector for InkSoft: license server
 
-`connector.mjs` is the license, update and health endpoint for the Second Set InkSoft Connector plugin:
+`connector.mjs` is the license, update and health endpoint for the Second Set Connector for InkSoft plugin:
 `https://secondsethq.com/.netlify/functions/connector?action=...`.
 `connector-watch.mjs` runs once a day and emails a digest. Data lives in Netlify Blobs (stores `licenses`, `health`, `releases`, `meta`).
 Nothing needs to be created in the Netlify UI. Blobs work automatically once the site deploys.
