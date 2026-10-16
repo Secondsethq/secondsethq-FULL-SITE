@@ -59,6 +59,30 @@
   text-decoration:none;transition:transform .25s ease,box-shadow .25s ease}
 .tqshot:hover{transform:translateY(-3px);box-shadow:0 18px 38px rgba(11,33,54,.15)}
 .tqshot img{display:block;width:100%;height:auto}
+.bkgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:8px}
+@media(max-width:760px){.bkgrid{grid-template-columns:1fr}}
+.bktile{border:1px solid rgba(8,5,5,.1);border-radius:16px;overflow:hidden;display:flex;
+  align-items:center;justify-content:center;padding:44px 28px;min-height:170px}
+.bktile img{max-width:88%;height:auto;display:block}
+.bkcap{font-family:"neue-haas-grotesk-display","Inter",sans-serif;font-size:11px;letter-spacing:2px;
+  text-transform:uppercase;color:var(--label);margin-top:10px}
+.bkpal{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-top:8px}
+@media(max-width:760px){.bkpal{grid-template-columns:repeat(3,1fr)}}
+.bksw{border-radius:12px;overflow:hidden;border:1px solid rgba(8,5,5,.1)}
+.bksw i{display:block;height:72px}
+.bksw b{display:block;font-family:"neue-haas-grotesk-display","Inter",sans-serif;font-size:11px;
+  letter-spacing:1.5px;text-transform:uppercase;color:var(--ink);padding:10px 10px 0}
+.bksw span{display:block;font-family:"JetBrains Mono",monospace;font-size:10.5px;color:var(--label);
+  padding:2px 10px 11px}
+.bksheet{display:block;border:1px solid rgba(8,5,5,.1);border-radius:16px;overflow:hidden;background:#fff}
+.bksheet img{display:block;width:100%;height:auto}
+.bkcards{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:8px}
+@media(max-width:760px){.bkcards{grid-template-columns:1fr}}
+.bkcards img{display:block;width:100%;height:auto;border-radius:14px;border:1px solid rgba(8,5,5,.1)}
+.bkdig{display:grid;grid-template-columns:300px 1fr;gap:28px;align-items:start;margin-top:8px}
+@media(max-width:760px){.bkdig{grid-template-columns:1fr}}
+.bkdig img{display:block;width:100%;height:auto;border-radius:14px;border:1px solid rgba(8,5,5,.1)}
+.bkdig .bkshot{max-height:520px;overflow:hidden;border-radius:14px}
 .tqshot span{display:block;padding:14px 18px;background:#fff;font-family:"neue-haas-grotesk-display","Inter",sans-serif;
   font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--teal)}
 </style>
@@ -77,6 +101,7 @@
 
 
 <header id="main" class="phead reveal"><div class="wrap">
+  <img src="assets/work/dcsw-logo.png" alt="DC Signature Woodworks logo" style="height:62px;width:auto;margin-bottom:22px" class="fade">
   <div class="eyebrow fade">Timber Framing &amp; Fine Carpentry &middot; Mineral Wells, TX</div>
   <h1 class="pt fade" style="transition-delay:.05s">DC Signature <em>Woodworks</em></h1>
   <p class="fade" style="transition-delay:.1s">A brand and a website for a North Texas timber framing and carpentry company. Within two weeks of going live it had brought in roughly $70,000 in signed contracts and put two residential developers in direct contact with the shop.</p>
@@ -92,16 +117,68 @@
   <aside class="cmeta">
     <h3 class="sub3">What we delivered</h3>
     <ul>
-      <li>Brand identity</li>
+      <li>Brand identity &amp; logo system</li>
+      <li>Brand sheet with usage rules</li>
       <li>Website design &amp; build</li>
-      <li>Business cards</li>
-      <li>Digital contact card</li>
       <li>Copywriting for every page</li>
       <li>Service pages per trade</li>
+      <li>Business cards, per person</li>
+      <li>Digital contact cards &amp; QR codes</li>
+      <li>Email signatures</li>
     </ul>
     <div class="cmeta-cat">Branding &middot; Websites &middot; Print &amp; Packaging</div>
   </aside>
 </div></div></section>
+
+<section class="reveal"><div class="wrap">
+  <div class="eyebrow fade">Identity</div>
+  <h2 class="sec fade">A mark made of <em>the material.</em></h2>
+  <p class="cpara fade" style="max-width:760px">The logo is a log read end on. The D is the face of the timber with its grain and growth rings drawn in, and the C is cut out of it in char. It works at the size of a favicon and at the size of a truck door, which matters for a business whose signage is a job site.</p>
+  <div class="bkgrid fade">
+    <div><div class="bktile" style="background:#F3EADB"><img src="assets/work/dcsw-logo.png" alt="DC Signature Woodworks horizontal logo in the primary colorway" loading="lazy"></div><p class="bkcap">Horizontal &middot; primary</p></div>
+    <div><div class="bktile" style="background:#1A110B"><img src="assets/work/dcsw-logo-reversed.png" alt="DC Signature Woodworks horizontal logo reversed out of a dark background" loading="lazy"></div><p class="bkcap">Horizontal &middot; reversed</p></div>
+  </div>
+
+  <h3 class="sub3 fade" style="margin-top:42px">The timber palette</h3>
+  <div class="bkpal fade">
+    <div class="bksw"><i style="background:#F3EADB"></i><b>Linen</b><span>#F3EADB</span></div>
+    <div class="bksw"><i style="background:#DCC4A0"></i><b>Sawdust</b><span>#DCC4A0</span></div>
+    <div class="bksw"><i style="background:#A87D56"></i><b>Oak</b><span>#A87D56</span></div>
+    <div class="bksw"><i style="background:#6B4226"></i><b>Walnut</b><span>#6B4226</span></div>
+    <div class="bksw"><i style="background:#3A261A"></i><b>Bark</b><span>#3A261A</span></div>
+    <div class="bksw"><i style="background:#1A110B"></i><b>Char</b><span>#1A110B</span></div>
+  </div>
+  <p class="aside fade">Six colors taken off the material itself, each with a job. Chivo carries the type in three weights. Every rule is written down, which is the part that keeps a brand consistent once other people start using it.</p>
+
+  <h3 class="sub3 fade" style="margin-top:42px">The brand sheet</h3>
+  <p class="cpara fade" style="max-width:760px">One page he can hand to a sign writer, a printer or anyone else who needs to use the mark. Color, type, logo variants, clear space, minimum sizes, and a short list of what not to do.</p>
+  <div class="bksheet fade"><img src="assets/work/dcsw-brand-sheet.jpg" alt="DC Signature Woodworks brand sheet showing the timber color palette, Chivo type scale, logo variants, clear space rules and usage do and don't lists" loading="lazy" width="935" height="1210"></div>
+</div></section>
+
+<section class="reveal"><div class="wrap">
+  <div class="eyebrow fade">Print and pocket</div>
+  <h2 class="sec fade">Something to hand over, <em>something to send.</em></h2>
+  <p class="cpara fade" style="max-width:760px">A builder meets people on site, so the brand had to work on paper as well as on a screen. Cards for each member of the team, and a digital contact card behind a QR code so a client can save the number without typing it.</p>
+  <div class="bkcards fade">
+    <img src="assets/work/dcsw-card-front.jpg" alt="DC Signature Woodworks business card front, logo on a dark walnut field above the line Decks, fences, pergolas, pavilions and dock repair" loading="lazy" width="600" height="360">
+    <img src="assets/work/dcsw-card-back.jpg" alt="DC Signature Woodworks business card back with contact details" loading="lazy" width="600" height="360">
+  </div>
+  <div class="bkdig fade" style="margin-top:28px">
+    <div class="bkshot"><img src="assets/work/dcsw-digital-card.jpg" alt="Digital contact card for Dean Jones with call, text and email buttons, a save to contacts button and a QR code" loading="lazy"></div>
+    <div>
+      <h3 class="sub3">The digital card</h3>
+      <ul class="plist" style="margin-top:6px">
+        <li>Call, text and email in one tap, so nobody has to copy a number off a photo</li>
+        <li>Save to contacts writes the whole card into a phone's address book</li>
+        <li>A QR code on the printed card opens the same page</li>
+        <li>One per person, so the card belongs to whoever handed it over</li>
+      </ul>
+      <h3 class="sub3" style="margin-top:26px">Email signature</h3>
+      <p class="cpara">The same identity on every message that leaves the business.</p>
+      <img src="assets/work/dcsw-signature.jpg" alt="DC Signature Woodworks email signature for Dean Jones" loading="lazy" style="margin-top:12px">
+    </div>
+  </div>
+</div></section>
 
 <section class="reveal"><div class="wrap">
   <h2 class="sec fade">The <em>new site.</em></h2>
@@ -146,7 +223,7 @@
   <div class="tqw fade">
     <span class="tqmark">&ldquo;</span>
     <p class="tqt">TKTK_TESTIMONIAL &mdash; Dean's review, in his own words, pasted here exactly as he wrote it on Google or Yelp.</p>
-    <div class="tqa"><span class="tqa-line"></span><span class="tqa-txt"><b>Dean TKTK_LASTNAME</b> &middot; DC Signature Woodworks</span></div>
+    <div class="tqa"><span class="tqa-line"></span><span class="tqa-txt"><b>Dean Jones</b> &middot; Owner, DC Signature Woodworks</span></div>
   </div>
   <div class="tqdraft fade"><b>Not for deploy.</b> Placeholder only. Nothing here is a real quote. Do not publish anything attributed to Dean until his review is live on Google or Yelp and you are quoting his own words from it. Delete this notice once the real quote is in.</div>
 </div></section>
