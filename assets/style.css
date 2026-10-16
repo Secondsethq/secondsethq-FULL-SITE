@@ -345,7 +345,7 @@ h3.sub3{font-family:"neue-haas-grotesk-display","Inter",sans-serif;font-size:20p
 
 .cmeta li{font-size:14.5px;color:#48566A;padding:8px 0 8px 22px;position:relative;border-bottom:1px solid #E6EBF1;}
 
-.cmeta li::before{content:"¹3";position:absolute;left:0;color:var(--sage);font-weight:700;}
+.cmeta li::before{content:"\2713";position:absolute;left:0;color:var(--sage);font-weight:700;}
 
 .cmeta-cat{margin-top:16px;font-family:"neue-haas-grotesk-display","Inter",sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);}
 

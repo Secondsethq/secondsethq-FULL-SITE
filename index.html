@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="https://use.typekit.net/dgx7ejb.css">
 <!-- JetBrains Mono is not in the Typekit kit, so it loads here. Inter and Fraunces trimmed 15 Aug 2026. -->
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css?v=20260815a">
+<link rel="stylesheet" href="assets/style.css?v=20261016a">
 
 <link rel="icon" type="image/png" href="assets/favicon-32.png"><link rel="icon" href="assets/favicon.ico" sizes="any"><link rel="apple-touch-icon" href="assets/favicon-180.png">
 <script type="application/ld+json">
@@ -122,6 +122,70 @@
 
 
 <!-- TWO SPECIALISTS -->
+<section class="hm-sec reveal" id="reviews" hidden><div class="wrap">
+  <style>
+  /* page-scoped: Google reviews strip. rv* prefix. */
+  #reviews .rv-head{display:flex;align-items:baseline;justify-content:space-between;gap:18px;flex-wrap:wrap}
+  #reviews .rv-score{font-family:"neue-haas-grotesk-display","Inter",sans-serif;font-size:13px;letter-spacing:1.5px;
+    text-transform:uppercase;color:var(--label)}
+  #reviews .rv-score b{color:var(--ink);font-size:15px;letter-spacing:1px}
+  #reviews .rv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:26px}
+  @media(max-width:900px){#reviews .rv-grid{grid-template-columns:1fr}}
+  #reviews .rv-card{background:#fff;border:1px solid rgba(8,5,5,.09);border-radius:16px;padding:24px;
+    display:flex;flex-direction:column;gap:14px}
+  #reviews .rv-stars{color:var(--coral);letter-spacing:3px;font-size:15px}
+  #reviews .rv-text{font-size:15.5px;line-height:1.58;color:var(--rust);flex:1}
+  #reviews .rv-who{display:flex;align-items:center;gap:11px;border-top:1px solid rgba(8,5,5,.08);padding-top:14px}
+  #reviews .rv-who img{width:34px;height:34px;border-radius:50%;flex:none;object-fit:cover;background:var(--taupe)}
+  #reviews .rv-name{font-size:14px;font-weight:600;color:var(--ink);line-height:1.25}
+  #reviews .rv-when{font-size:12px;color:var(--label)}
+  #reviews .rv-foot{margin-top:20px;font-size:13px;color:var(--label)}
+  #reviews .rv-foot a{color:var(--teal)}
+  </style>
+  <div class="rv-head fade">
+    <h2 class="sec">What clients say</h2>
+    <p class="rv-score" id="rv-score"></p>
+  </div>
+  <div class="rv-grid fade" id="rv-grid"></div>
+  <p class="rv-foot fade">Reviews from <a id="rv-link" href="https://www.google.com/maps?cid=12801815668593787630" target="_blank" rel="noopener">Google</a>, shown as written.</p>
+</div></section>
+<script>
+/* Pulls reviews from the Netlify function. The section stays hidden unless at
+   least MIN_REVIEWS come back, so a thin or failed response shows nothing
+   rather than an empty widget. */
+(function(){
+  var MIN_REVIEWS = 2, MAX_SHOWN = 3;
+  var sec = document.getElementById('reviews');
+  if (!sec) return;
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  function stars(n){ n = Math.round(n)||0; return '★'.repeat(n) + '☆'.repeat(5-n); }
+  fetch('/.netlify/functions/reviews').then(function(r){ return r.json(); }).then(function(d){
+    if (!d || !d.ok || !d.reviews || d.reviews.length < MIN_REVIEWS) return;
+    var grid = document.getElementById('rv-grid');
+    grid.innerHTML = d.reviews.slice(0, MAX_SHOWN).map(function(r){
+      return '<div class="rv-card">' +
+        '<div class="rv-stars" aria-label="' + esc(r.rating) + ' out of 5">' + stars(r.rating) + '</div>' +
+        '<p class="rv-text">' + esc(r.text) + '</p>' +
+        '<div class="rv-who">' +
+          (r.photo ? '<img src="' + esc(r.photo) + '" alt="" loading="lazy" width="34" height="34">'
+                   : '<img alt="" width="34" height="34">') +
+          '<span><span class="rv-name">' + esc(r.author) + '</span><br>' +
+          '<span class="rv-when">' + esc(r.when) + '</span></span>' +
+        '</div></div>';
+    }).join('');
+    if (d.rating && d.total) {
+      document.getElementById('rv-score').innerHTML =
+        '<b>' + esc(d.rating.toFixed ? d.rating.toFixed(1) : d.rating) + ' out of 5</b> &middot; ' +
+        esc(d.total) + ' Google review' + (d.total === 1 ? '' : 's');
+    }
+    if (d.profileUrl) document.getElementById('rv-link').href = d.profileUrl;
+    sec.hidden = false;
+    sec.classList.add('revealed','in');
+  }).catch(function(){ /* stays hidden */ });
+})();
+</script>
+
 <section class="reveal"><div class="wrap">
   <h2 class="sec fade">Two specialists — <em>not a package.</em></h2>
   <p class="sub fade" style="transition-delay:.05s">We're two people with two different skill sets. Hire one of us, hire both, or pick a single task off either list. You're never signing up for a bundle you don't need.</p>
