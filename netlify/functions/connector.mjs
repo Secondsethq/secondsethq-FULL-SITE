@@ -616,7 +616,7 @@ export function makeHandler({ getStore, fetch, env = {}, now = () => Date.now() 
         result.license = lic.key;
         if (email) {
           const planLabel = plan === 'premium' ? 'Premium' : 'Basic';
-          await sendEmail({
+          const delivered = await sendEmail({
             to: email,
             subject: 'Your Second Set Connector for InkSoft license key',
             html: `<p>Hi${name ? ' ' + esc(name.split(' ')[0]) : ''},</p>`
@@ -628,10 +628,23 @@ export function makeHandler({ getStore, fetch, env = {}, now = () => Date.now() 
             text: `Thanks for buying the Second Set Connector for InkSoft (${planLabel}).\n\nYour license key: ${lic.key}\n\n`
               + `In WordPress, open Second Set > License, paste the key and click Activate.\n`,
           });
+          // A failed send used to be silent: the buyer paid, the key existed, and nobody
+          // ever found out it never arrived. Surface it in the webhook response so it shows
+          // in Stripe's delivery log, and alert loudly enough to forward the key by hand.
+          result.key_emailed = delivered;
+          if (!delivered) result.email_failed_to = email;
           if (env.ALERT_EMAIL) {
-            await sendEmail({ to: env.ALERT_EMAIL, subject: `New ${planLabel} license: ${email}`,
-              html: `<p>${esc(name)} &lt;${esc(email)}&gt; bought ${planLabel}. Key ${esc(lic.key)}.</p>`,
-              text: `${name} <${email}> bought ${planLabel}. Key ${lic.key}.` });
+            const subject = delivered
+              ? `New ${planLabel} license: ${email}`
+              : `ACTION NEEDED: ${planLabel} license bought, key email FAILED to ${email}`;
+            const tail = delivered
+              ? ''
+              : ` The license email did NOT send. Forward the key to them by hand, then check the`
+                + ` Resend log and that secondsethq.com is verified for SPF, DKIM and DMARC.`;
+            await sendEmail({ to: env.ALERT_EMAIL, subject,
+              html: `<p>${esc(name)} &lt;${esc(email)}&gt; bought ${planLabel}. Key ${esc(lic.key)}.</p>`
+                + (delivered ? '' : `<p><b>${esc(tail.trim())}</b></p>`),
+              text: `${name} <${email}> bought ${planLabel}. Key ${lic.key}.${tail}` });
           }
         }
         break;

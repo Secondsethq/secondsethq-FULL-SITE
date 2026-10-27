@@ -368,3 +368,57 @@ test('Stripe: plan falls back to the payment link id when metadata.plan is absen
   await s2.j('stripe', { body: over, headers: { 'stripe-signature': stripeSig(over) } });
   assert.equal((await s2.admin('admin_list', undefined, 'GET')).body.licenses[0].plan, 'basic');
 });
+
+test('Stripe: a failed license email is reported, not swallowed', async () => {
+  const BUYER = 'buyer@gmail.com';
+  const ALERT = 'ops@example.com';
+  const sent = [];
+  // Resend accepts the alert but rejects the buyer, which is what a domain
+  // reputation or verification problem looks like from the function's side.
+  const fetchStub = async (url, init) => {
+    const body = JSON.parse(init.body);
+    sent.push(body);
+    const toBuyer = (body.to || []).includes(BUYER);
+    return new Response('{}', { status: toBuyer ? 422 : 200 });
+  };
+  const blobs = memoryBlobs();
+  const handler = makeHandler({
+    getStore: blobs.getStore,
+    fetch: fetchStub,
+    env: { ADMIN_TOKEN: ADMIN, RESEND_API_KEY: 're_test', ALERT_EMAIL: ALERT,
+           STRIPE_WEBHOOK_SECRET: WH, STRIPE_PLINKS_BASIC: 'plink_b1' },
+    now: () => Date.parse('2026-09-28T12:00:00Z'), // match stripeSig's default timestamp
+  });
+
+  const payload = JSON.stringify({ id: 'evt_mail', type: 'checkout.session.completed', data: { object: {
+    id: 'cs_mail', customer: 'cus_mail', subscription: 'sub_mail', payment_link: 'plink_b1',
+    customer_details: { email: BUYER, name: 'Dana Shop' } } } });
+
+  const res = await handler(new Request(`${BASE}?action=stripe`, {
+    method: 'POST', headers: { 'stripe-signature': stripeSig(payload), 'content-type': 'application/json' }, body: payload }));
+  const out = await res.json();
+
+  assert.equal(res.status, 200, 'Stripe still gets a 200 so it does not retry');
+  assert.match(out.license, /^SS-/, 'the license is still created');
+  assert.equal(out.key_emailed, false, 'the response says the key was not emailed');
+  assert.equal(out.email_failed_to, BUYER, 'and names who missed it');
+
+  const alert = sent.find((m) => (m.to || []).includes(ALERT));
+  assert.ok(alert, 'an alert still goes out');
+  assert.match(alert.subject, /ACTION NEEDED/, 'the alert subject flags it');
+  assert.ok(alert.text.includes(out.license), 'the alert carries the key so it can be forwarded by hand');
+
+  // The happy path still reports success.
+  const okHandler = makeHandler({
+    getStore: memoryBlobs().getStore,
+    fetch: async (u, i) => { JSON.parse(i.body); return new Response('{}', { status: 200 }); },
+    env: { ADMIN_TOKEN: ADMIN, RESEND_API_KEY: 're_test', ALERT_EMAIL: ALERT,
+           STRIPE_WEBHOOK_SECRET: WH, STRIPE_PLINKS_BASIC: 'plink_b1' },
+    now: () => Date.parse('2026-09-28T12:00:00Z'), // match stripeSig's default timestamp
+  });
+  const ok = await okHandler(new Request(`${BASE}?action=stripe`, {
+    method: 'POST', headers: { 'stripe-signature': stripeSig(payload), 'content-type': 'application/json' }, body: payload }));
+  const okOut = await ok.json();
+  assert.equal(okOut.key_emailed, true);
+  assert.equal(okOut.email_failed_to, undefined);
+});
