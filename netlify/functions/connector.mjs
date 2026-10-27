@@ -524,6 +524,18 @@ export function makeHandler({ getStore, fetch, env = {}, now = () => Date.now() 
   }
 
   /* ---------------- Stripe */
+  /* Map a Stripe Payment Link id to a plan, via STRIPE_PLINKS_<PLAN> (comma separated). */
+  function planFromPaymentLink(link) {
+    const id = typeof link === 'string' ? link : (link && link.id);
+    if (!id) return null;
+    for (const p of PLANS) {
+      const ids = String(env['STRIPE_PLINKS_' + p.toUpperCase()] || '')
+        .split(',').map((x) => x.trim()).filter(Boolean);
+      if (ids.includes(id)) return p;
+    }
+    return null;
+  }
+
 
   function verifyStripe(raw, header) {
     const secret = env.STRIPE_WEBHOOK_SECRET;
@@ -578,8 +590,15 @@ export function makeHandler({ getStore, fetch, env = {}, now = () => Date.now() 
 
     switch (event.type) {
       case 'checkout.session.completed': {
-        const plan = obj.metadata && obj.metadata.plan;
-        if (!PLANS.includes(plan)) { result.ignored = 'no metadata.plan'; break; }
+        // Plan comes from session metadata when present. The Stripe dashboard cannot set
+        // metadata on a Payment Link, so fall back to mapping the payment link id, which a
+        // buyer cannot tamper with (unlike client_reference_id in the URL).
+        let plan = obj.metadata && obj.metadata.plan;
+        if (!PLANS.includes(plan)) plan = planFromPaymentLink(obj.payment_link);
+        if (!PLANS.includes(plan)) {
+          result.ignored = 'no plan: set metadata.plan, or map the payment link in STRIPE_PLINKS_BASIC / STRIPE_PLINKS_PREMIUM';
+          break;
+        }
         const subscription = typeof obj.subscription === 'string' ? obj.subscription : obj.subscription?.id || null;
         const customer = typeof obj.customer === 'string' ? obj.customer : obj.customer?.id || null;
         // Idempotency: Stripe retries webhooks.
@@ -591,7 +610,7 @@ export function makeHandler({ getStore, fetch, env = {}, now = () => Date.now() 
         const lic = await createLicense({
           plan, email, name,
           note: `Stripe checkout ${obj.id || ''}`.trim(),
-          max_sites: obj.metadata.max_sites || 1,
+          max_sites: (obj.metadata && obj.metadata.max_sites) || 1,
           stripe_customer: customer, stripe_subscription: subscription, stripe_session: obj.id,
         });
         result.license = lic.key;

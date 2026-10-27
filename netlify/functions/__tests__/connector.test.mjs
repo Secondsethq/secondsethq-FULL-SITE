@@ -337,3 +337,34 @@ test('watch digest lists stale/failing sites and expiring licenses', async () =>
   const off = makeWatch({ getStore: s.blobs.getStore, fetch: async () => { throw new Error('should not send'); }, env: {}, now: s.clock.now });
   assert.equal((await off()).sent, false);
 });
+
+test('Stripe: plan falls back to the payment link id when metadata.plan is absent', async () => {
+  const PLINK = 'plink_1UUv486NXyyqOvXvAt6eHaRe';
+  const body = JSON.stringify({ id: 'evt_pl', type: 'checkout.session.completed', data: { object: {
+    id: 'cs_pl', customer: 'cus_pl', subscription: 'sub_pl', payment_link: PLINK,
+    customer_details: { email: 'shop@example.com', name: 'Dana Shop' } } } });
+
+  // No metadata.plan and no mapping configured: refuse rather than guess.
+  const bare = setup();
+  const ignored = await bare.j('stripe', { body, headers: { 'stripe-signature': stripeSig(body) } });
+  assert.equal(ignored.status, 200);
+  assert.match(ignored.body.ignored || '', /no plan/);
+  assert.equal((await bare.admin('admin_list', undefined, 'GET')).body.licenses.length, 0, 'no license issued');
+
+  // Same event, with the link mapped to premium.
+  const s = setup({ STRIPE_PLINKS_PREMIUM: `plink_other, ${PLINK}`, STRIPE_PLINKS_BASIC: 'plink_basic_1' });
+  const ok = await s.j('stripe', { body, headers: { 'stripe-signature': stripeSig(body) } });
+  assert.equal(ok.status, 200);
+  assert.match(ok.body.license, /^SS-/);
+  const lic = (await s.admin('admin_list', undefined, 'GET')).body.licenses[0];
+  assert.equal(lic.plan, 'premium');
+  assert.ok(s.emails.some((e) => e.body.to[0] === 'shop@example.com'), 'key emailed to buyer');
+
+  // metadata.plan still wins over the link mapping.
+  const over = JSON.stringify({ id: 'evt_pl2', type: 'checkout.session.completed', data: { object: {
+    id: 'cs_pl2', customer: 'cus_pl2', subscription: 'sub_pl2', payment_link: PLINK,
+    metadata: { plan: 'basic' }, customer_details: { email: 'two@example.com', name: 'Two' } } } });
+  const s2 = setup({ STRIPE_PLINKS_PREMIUM: PLINK });
+  await s2.j('stripe', { body: over, headers: { 'stripe-signature': stripeSig(over) } });
+  assert.equal((await s2.admin('admin_list', undefined, 'GET')).body.licenses[0].plan, 'basic');
+});

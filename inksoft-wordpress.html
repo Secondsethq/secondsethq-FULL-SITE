@@ -220,6 +220,22 @@
 .ik-setup p{font-size:15px;line-height:1.5;color:var(--rust);margin:0}
 .ik-setup-link{display:inline-block;margin-top:8px;font-weight:700;color:var(--teal);text-decoration:none}
 @media(max-width:860px){.ik-plans,.ik-setup{grid-template-columns:1fr}.ik-plan{padding:28px 22px}.ik-setup{gap:20px;padding:24px 22px}}
+.ik-res{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:30px}
+@media(max-width:980px){.ik-res{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.ik-res{grid-template-columns:1fr}}
+.ik-rescard{background:#fff;border:1px solid rgba(8,5,5,.1);border-radius:16px;padding:24px 22px;display:flex;flex-direction:column}
+.ik-resnum{font-family:var(--display);font-size:clamp(30px,3.4vw,38px);font-weight:700;color:var(--coral);letter-spacing:-.02em;line-height:1}
+.ik-reslab{font-size:15px;line-height:1.5;color:var(--rust);margin-top:10px;flex:1}
+.ik-ressrc{font-family:"JetBrains Mono",monospace;font-size:10.5px;line-height:1.5;color:var(--label);margin-top:14px;padding-top:12px;border-top:1px solid rgba(8,5,5,.08)}
+.ik-resfoot{margin-top:24px;background:rgba(17,121,151,.07);border-radius:14px;padding:20px 24px;font-size:15px;line-height:1.6;color:var(--rust);max-width:880px}
+.ik-resfoot b{color:var(--ink)}
+.ik-sw4{list-style:none;margin:22px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+@media(max-width:900px){.ik-sw4{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.ik-sw4{grid-template-columns:1fr}}
+.ik-sw4 li{background:rgba(17,121,151,.06);border-radius:12px;padding:16px 18px}
+.ik-sw4 b{display:block;font-size:15.5px;margin-bottom:5px}
+.ik-sw4 span{display:block;font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--teal);margin-bottom:7px}
+.ik-sw4 p{font-size:14.5px;line-height:1.5;color:var(--rust);margin:0}
 </style>
 <script>document.documentElement.classList.add("ik-motion")</script>
 <link rel="stylesheet" href="/assets/calm.css?v=20260930a">
@@ -280,6 +296,35 @@
       <li>Only cart and checkout use InkSoft, where InkSoft's logic belongs</li>
     </ul></div>
   </div>
+</div></section>
+
+<section class="ik-sec reveal" id="results"><div class="wrap">
+  <div class="eyebrow fade">Proof</div>
+  <h2 class="fade">What it did for <em>one real shop.</em></h2>
+  <p class="ik-note fade" style="max-width:780px">A screen printing shop in Vista, California moved from an iframe-based InkSoft setup to WordPress with the connector on October 12, 2026. Every number below is measured, dated and sourced.</p>
+  <div class="ik-res fade">
+    <div class="ik-rescard">
+      <div class="ik-resnum">+63%</div>
+      <p class="ik-reslab">Google impressions in the first 11 days, 1,403 against 863 in the 11 days before.</p>
+      <p class="ik-ressrc">Search Console &middot; Oct 12&ndash;22 vs Oct 1&ndash;11, 2026<br>Alchemy Print Co., Vista CA</p>
+    </div>
+    <div class="ik-rescard">
+      <div class="ik-resnum">78 &rarr; 100</div>
+      <p class="ik-reslab">Desktop PageSpeed on the home page. Layout shift went from 0.51 to zero.</p>
+      <p class="ik-ressrc">pagespeed.web.dev &middot; Oct 13, 2026<br>Alchemy Print Co., Vista CA</p>
+    </div>
+    <div class="ik-rescard">
+      <div class="ik-resnum">97 &rarr; 111</div>
+      <p class="ik-reslab">Pages indexed in Google, with sitemap discovery up from 35 to 134.</p>
+      <p class="ik-ressrc">GSC Pages report &middot; Oct 15, 2026<br>Alchemy Print Co., Vista CA</p>
+    </div>
+    <div class="ik-rescard">
+      <div class="ik-resnum">7 &rarr; 1&ndash;2</div>
+      <p class="ik-reslab">Clicks for a customer to reach the design studio from a product.</p>
+      <p class="ik-ressrc">Site flow &middot; Sept 27, 2026<br>Alchemy Print Co., Vista CA</p>
+    </div>
+  </div>
+  <p class="ik-resfoot fade"><b>Being straight about early data.</b> Clicks were flat over those first 11 days, 25 against 30, so this is not a traffic claim yet. Average position moved from 7.2 to 12.8 because the site now appears for many more non-brand searches such as "screen printing san diego", not because brand rankings fell. The 30-day report lands November 9 and these numbers get updated then.</p>
 </div></section>
 
 <section class="ik-sec reveal" id="plugin"><div class="wrap">
@@ -355,7 +400,13 @@
     <div>
       <h3>Already on WordPress with InkSoft?</h3>
       <p>We switch your existing site over to the plugin without rebuilding it from scratch. Every old product and category link forwards to its new page, so you keep the traffic and rankings you already have.</p>
-    </div>
+          <ol class="ik-sw4">
+        <li><span>Step 1</span><b>Audit</b><p>We read your store and your site, and list what is broken, slow or missing from Google.</p></li>
+        <li><span>Step 2</span><b>Staging build</b><p>The new site is built and checked on staging. Your live site keeps running.</p></li>
+        <li><span>Step 3</span><b>Launch</b><p>We go live with every old URL redirected, so rankings carry across.</p></li>
+        <li><span>Step 4</span><b>30-day report</b><p>Indexing, impressions and speed measured against the month before.</p></li>
+      </ol>
+</div>
     <div class="ik-switch-cta"><a class="btn" href="#quote">Switch my site</a><a class="ik-switch-mail" href="mailto:hello@secondsethq.com?subject=Switch%20my%20InkSoft%20site&amp;body=Hi%20Second%20Set%2C%0A%0AI%27d%20like%20to%20switch%20my%20site%20over.%0A%0AMy%20InkSoft%20store%20link%3A%20%0AMy%20current%20website%3A%20%0A">or email us</a></div>
   </div>
 </div></section>
