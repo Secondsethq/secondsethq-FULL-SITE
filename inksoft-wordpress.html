@@ -229,6 +229,18 @@
 .ik-ressrc{font-family:"JetBrains Mono",monospace;font-size:10.5px;line-height:1.5;color:var(--label);margin-top:14px;padding-top:12px;border-top:1px solid rgba(8,5,5,.08)}
 .ik-resfoot{margin-top:24px;background:rgba(17,121,151,.07);border-radius:14px;padding:20px 24px;font-size:15px;line-height:1.6;color:var(--rust);max-width:880px}
 .ik-resfoot b{color:var(--ink)}
+.ik-quote{background:var(--ink);border-radius:20px;padding:44px 42px;margin-top:26px;position:relative;overflow:hidden}
+@media(max-width:700px){.ik-quote{padding:32px 22px;border-radius:16px}}
+.ik-quote::after{content:"";position:absolute;right:-60px;bottom:-60px;width:210px;height:210px;border:22px solid rgba(244,78,45,.16);border-radius:50%}
+.ik-qmark{font-family:var(--display);font-size:70px;line-height:.55;color:var(--coral);display:block;margin-bottom:10px}
+.ik-qt{font-size:22px;line-height:1.52;color:var(--bone);max-width:760px;position:relative;z-index:1;letter-spacing:-.01em;margin:0}
+@media(max-width:700px){.ik-qt{font-size:18px}}
+.ik-qa{margin-top:24px;display:flex;align-items:center;gap:14px;position:relative;z-index:1;flex-wrap:wrap}
+.ik-qa-line{width:38px;height:2px;background:var(--coral);flex:none}
+.ik-qa-txt{font-family:"neue-haas-grotesk-display","Inter",sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--taupe)}
+.ik-qa-txt b{color:var(--bone);font-weight:600;letter-spacing:2px}
+.ik-qlink{display:inline-block;margin-top:18px;position:relative;z-index:1;font-weight:700;color:#8FD3E8;text-decoration:none}
+.ik-qlink:hover{text-decoration:underline}
 .ik-sw4{list-style:none;margin:22px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
 @media(max-width:900px){.ik-sw4{grid-template-columns:1fr 1fr}}
 @media(max-width:520px){.ik-sw4{grid-template-columns:1fr}}
@@ -325,6 +337,12 @@
     </div>
   </div>
   <p class="ik-resfoot fade"><b>Being straight about early data.</b> Clicks were flat over those first 11 days, 25 against 30, so this is not a traffic claim yet. Average position moved from 7.2 to 12.8 because the site now appears for many more non-brand searches such as "screen printing san diego", not because brand rankings fell. The 30-day report lands November 9 and these numbers get updated then.</p>
+  <div class="ik-quote fade">
+    <span class="ik-qmark">&ldquo;</span>
+    <p class="ik-qt">Working with Second Set has been a game changer for our website and SEO&hellip; Since working with Second Set we have seen a huge improvement of online form inquiries and inbound calls finding us through our website. 10/10 Highly recommended!</p>
+    <div class="ik-qa"><span class="ik-qa-line"></span><span class="ik-qa-txt"><b>Adam Brooks</b> &middot; Owner, Alchemy Print Co., Vista CA</span></div>
+    <a class="ik-qlink" href="/work-alchemy">Read the full case study &rarr;</a>
+  </div>
 </div></section>
 
 <section class="ik-sec reveal" id="plugin"><div class="wrap">
