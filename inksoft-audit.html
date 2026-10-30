@@ -150,6 +150,10 @@
           action="/inksoft-audit?sent=1"
           data-netlify="true" netlify-honeypot="company-website">
       <input type="hidden" name="form-name" value="inksoft-audit">
+      <input type="hidden" name="first_touch">
+      <input type="hidden" name="last_touch">
+      <input type="hidden" name="visits">
+      <input type="hidden" name="submitted_from">
       <p class="ia-hp"><label>Leave this blank <input name="company-website" tabindex="-1" autocomplete="off"></label></p>
 
       <div class="ia-row">
@@ -359,13 +363,25 @@ Cal.ns["30min"]("ui", {"layout":"month_view"});
 </script>
 <script async src="https://tally.so/widgets/embed.js"></script>
 <script>
-(function(){
+/* Runs on DOMContentLoaded so the deferred ss-track.js has already defined
+   window.ssTrack; firing during parse would lose the attribution. */
+document.addEventListener('DOMContentLoaded', function(){
   try{
     if (new URLSearchParams(location.search).get('sent') === '1') {
       var f = document.getElementById('ia-form'), ok = document.getElementById('ia-sent');
       if (f && ok) { f.hidden = true; ok.hidden = false; ok.scrollIntoView({block:'center'}); }
-    }
+      /* Netlify has accepted the submission and redirected here, so this is a
+         confirmed lead, not a submit click. Fire once per redirect. */
+      if (!sessionStorage.getItem('ia_lead_sent')) {
+        sessionStorage.setItem('ia_lead_sent', '1');
+        var p = { form_id: 'inksoft-audit', form_name: 'inksoft_store_audit',
+                  page_path: '/inksoft-audit', page_title: document.title };
+        if (typeof window.ssTrack === 'function') window.ssTrack('generate_lead', p);
+        else if (typeof gtag === 'function') gtag('event', 'generate_lead', p);
+      }
+    } else { try { sessionStorage.removeItem('ia_lead_sent'); } catch(e){} }
   }catch(e){}
-})();
+});
 </script>
+<script defer src="/assets/js/ss-track.js?v=20261030a"></script>
 </body></html>
