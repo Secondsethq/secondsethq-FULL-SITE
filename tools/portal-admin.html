@@ -129,7 +129,7 @@ progress{width:100%}
 
   $('#newClient').addEventListener('click', function () {
     if (dirty && !confirmLeave()) return;
-    client = { id: '', name: '', business: '', greeting: '', emails: [], stripeCustomerId: '', vaultUrl: '', services: { ads: false }, headline: '', updated: '', todos: [], deliverables: [], agreements: [], files: [], training: [], logins: [], reports: [] };
+    client = { id: '', name: '', business: '', greeting: '', emails: [], stripeCustomerId: '', vaultUrl: 'https://vault.bitwarden.com/', services: { ads: false }, headline: '', updated: '', todos: [{ id: 't-vault', owner: 'client', who: '', title: 'Set up your password vault', detail: 'We will call you with your temporary Bitwarden password. Log in with your email, change the master password to one only you know, turn on two-step login, and save your recovery code somewhere safe. Then tick this done.', clientCanCheck: true, done: false, links: [{ label: 'Open Bitwarden', fileId: '', url: 'https://vault.bitwarden.com/' }] }], deliverables: [], agreements: [], files: [], training: [], logins: [], reports: [] };
     uploads = []; tab = 'settings'; dirty = true; renderEditor();
   });
 
