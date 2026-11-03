@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portal Admin | Second Set</title>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="icon" type="image/png" href="/assets/favicon-32.png">
+<link rel="stylesheet" href="https://use.typekit.net/dgx7ejb.css">
+<style>
+:root{--bone:#F0EFE9;--ink:#080505;--teal:#117997;--teal-d:#0c5a70;--coral:#F44E2D;--label:#6E635B;--line:#e4e1d8;--soft:#F7F6F2;
+--body:"neue-haas-grotesk-text",Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;--mono:ui-monospace,Menlo,Consolas,monospace}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bone);color:var(--ink);font:15px/1.5 var(--body)}
+a{color:var(--teal)}
+h1,h2,h3{margin:0;letter-spacing:-.02em}
+h1{font-size:26px}h2{font-size:19px}
+.wrap{max-width:1180px;margin:0 auto;padding:20px}
+.card{background:#fff;border-radius:14px;box-shadow:0 1px 2px rgba(8,5,5,.06),0 6px 20px rgba(8,5,5,.06);padding:18px}
+.lbl,label{display:block;font:500 12px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--label);margin:0 0 4px}
+input[type=text],input[type=email],input[type=url],input[type=password],textarea,select{width:100%;font:15px var(--body);padding:9px 11px;border:1px solid #d9d4ca;border-radius:9px;background:#fff;min-height:40px}
+textarea{min-height:70px;resize:vertical}
+.btn{font:600 14px var(--body);border:0;border-radius:9px;padding:9px 14px;min-height:40px;cursor:pointer;background:var(--teal);color:#fff;display:inline-flex;align-items:center;gap:6px;text-decoration:none}
+.btn:hover{background:var(--teal-d);color:#fff}
+.btn.ghost{background:var(--bone);color:var(--ink)}.btn.ghost:hover{background:var(--line)}
+.btn.danger{background:#fde3dc;color:#8a2a14}
+.btn.sm{min-height:32px;padding:5px 10px;font-size:13px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end}
+.row>*{flex:1 1 200px}
+.layout{display:grid;grid-template-columns:240px 1fr;gap:18px;align-items:start}
+@media (max-width:820px){.layout{grid-template-columns:1fr}}
+.clients button{display:block;width:100%;text-align:left;background:none;border:0;padding:9px 10px;border-radius:9px;font:15px var(--body);cursor:pointer;color:var(--ink)}
+.clients button:hover{background:var(--soft)}
+.clients button[aria-current="true"]{background:var(--ink);color:var(--bone)}
+.tabs{display:flex;gap:4px;flex-wrap:wrap;margin:14px 0}
+.tabs button{border:0;background:none;padding:8px 12px;border-radius:999px;font:500 14px var(--body);cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--ink);color:var(--bone)}
+.entry{background:var(--soft);border-radius:12px;padding:14px;margin-top:12px;display:flex;flex-direction:column;gap:10px}
+.entry .bar{display:flex;gap:6px;justify-content:flex-end;flex-wrap:wrap}
+.check{display:flex;align-items:center;gap:8px;font:14px var(--body);text-transform:none;letter-spacing:0;color:var(--ink);min-height:40px}
+.links{display:flex;flex-direction:column;gap:6px}
+.link{display:grid;grid-template-columns:1fr 1.4fr auto;gap:6px;align-items:center}
+@media (max-width:600px){.link{grid-template-columns:1fr}}
+.muted{color:var(--label)}
+.sticky{position:sticky;bottom:0;background:var(--bone);padding:12px 0;display:flex;gap:10px;flex-wrap:wrap;align-items:center;border-top:1px solid var(--line);margin-top:16px}
+table{width:100%;border-collapse:collapse;font-size:14px}td,th{padding:8px;border-bottom:1px solid #efece5;text-align:left}
+progress{width:100%}
+#toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:var(--ink);color:var(--bone);padding:10px 16px;border-radius:9px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:9}
+#toast.on{opacity:1}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="row" style="align-items:center;margin-bottom:14px">
+    <h1 style="flex:1 1 auto">Client portal admin</h1>
+    <button class="btn ghost sm" id="signout" type="button" hidden style="flex:0 0 auto">Sign out</button>
+  </div>
+
+  <section class="card" id="signin">
+    <h2>Admin token</h2>
+    <p class="muted">The same ADMIN_TOKEN as the connector admin page. It stays in this browser tab only.</p>
+    <form id="loginForm" class="row"><div><input id="token" type="password" autocomplete="current-password" placeholder="Paste token" required></div><button class="btn" type="submit" style="flex:0 0 auto">Sign in</button></form>
+  </section>
+
+  <div class="layout" id="main" hidden>
+    <aside class="card">
+      <span class="lbl">Clients</span>
+      <div class="clients" id="clientList"></div>
+      <button class="btn ghost sm" id="newClient" type="button" style="margin-top:10px;width:100%;justify-content:center">+ New client</button>
+      <label class="btn ghost sm" style="margin-top:6px;width:100%;justify-content:center;text-transform:none;letter-spacing:0;font:600 13px var(--body);color:var(--ink)">Import client file<input type="file" id="importFile" accept=".json,application/json" hidden></label>
+    </aside>
+    <section class="card" id="editor"><p class="muted">Pick a client, or add a new one.</p></section>
+  </div>
+</div>
+<div id="toast" role="status"></div>
+
+<script>
+(function () {
+  'use strict';
+  var API = '/.netlify/functions/portal';
+  var TK = 'ss_portal_admin_token';
+  var token = sessionStorage.getItem(TK) || '';
+  var client = null, uploads = [], customers = [], tab = 'settings', dirty = false;
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function toast(t) { var el = $('#toast'); el.textContent = t; el.classList.add('on'); setTimeout(function () { el.classList.remove('on'); }, 3200); }
+  function rid() { return Math.random().toString(16).slice(2, 14).padEnd(12, '0').slice(0, 12); }
+
+  async function call(action, body, query) {
+    var opts = { method: body ? 'POST' : 'GET', headers: { authorization: 'Bearer ' + token } };
+    if (body) { opts.headers['content-type'] = 'application/json'; opts.body = JSON.stringify(body); }
+    var res = await fetch(API + '?action=' + action + (query || ''), opts);
+    var j = {}; try { j = await res.json(); } catch (e) {}
+    if (res.status === 401) { signOut(); throw new Error('Token rejected.'); }
+    if (!res.ok) throw new Error(j.message || ('Error ' + res.status));
+    return j;
+  }
+
+  function signOut() { token = ''; sessionStorage.removeItem(TK); $('#main').hidden = true; $('#signout').hidden = true; $('#signin').hidden = false; }
+  $('#signout').addEventListener('click', signOut);
+  $('#loginForm').addEventListener('submit', async function (e) {
+    e.preventDefault(); token = $('#token').value.trim(); $('#token').value = '';
+    sessionStorage.setItem(TK, token);
+    try { await start(); } catch (err) { toast(err.message); }
+  });
+
+  async function start() {
+    var r = await call('admin_clients');
+    $('#signin').hidden = true; $('#main').hidden = false; $('#signout').hidden = false;
+    renderList(r.clients);
+    call('admin_customers').then(function (c) { customers = c.customers || []; if (c.error) toast(c.error); }).catch(function () {});
+  }
+
+  function renderList(list) {
+    $('#clientList').innerHTML = list.map(function (c) { return '<button type="button" data-id="' + esc(c.id) + '"' + (client && client.id === c.id ? ' aria-current="true"' : '') + '>' + esc(c.name || c.id) + (c.business ? '<br><small class="muted">' + esc(c.business) + '</small>' : '') + '</button>'; }).join('') || '<p class="muted">No clients yet.</p>';
+    $('#clientList').querySelectorAll('button').forEach(function (b) { b.addEventListener('click', function () { open(b.getAttribute('data-id')); }); });
+  }
+
+  async function open(id) {
+    if (dirty && !confirmLeave()) return;
+    var r = await call('admin_get', null, '&id=' + encodeURIComponent(id));
+    client = r.client; dirty = false;
+    await loadUploads();
+    renderList((await call('admin_clients')).clients);
+    renderEditor();
+  }
+  function confirmLeave() { return window.confirm('You have unsaved changes. Leave without saving?'); }
+
+  $('#newClient').addEventListener('click', function () {
+    if (dirty && !confirmLeave()) return;
+    client = { id: '', name: '', business: '', greeting: '', emails: [], stripeCustomerId: '', vaultUrl: '', services: { ads: false }, headline: '', updated: '', todos: [], deliverables: [], agreements: [], files: [], training: [], logins: [], reports: [] };
+    uploads = []; tab = 'settings'; dirty = true; renderEditor();
+  });
+
+  $('#importFile').addEventListener('change', async function (e) {
+    var f = e.target.files[0]; e.target.value = '';
+    if (!f) return;
+    try {
+      var c = JSON.parse(await f.text());
+      if (!c || !c.name) throw new Error('That file is not a client file.');
+      var exists = (await call('admin_clients')).clients.some(function (x) { return x.id === c.id; });
+      if (exists && !confirm('Replace ' + (c.name || c.id) + ' with this file? Their current portal content will be overwritten.')) return;
+      var r = await call('admin_save', { client: c });
+      dirty = false; toast('Imported ' + r.client.name + '.');
+      await open(r.client.id);
+    } catch (err) { toast(err.message); }
+  });
+
+  async function loadUploads() { if (!client || !client.id) { uploads = []; return; } uploads = (await call('admin_files', null, '&clientId=' + encodeURIComponent(client.id))).files || []; }
+
+  /* ---------- field schemas ---------- */
+  var LINKS = { k: 'links', t: 'links', l: 'Buttons (an uploaded file or a web link)' };
+  var SCHEMAS = {
+    todos: { title: 'To-dos', note: 'Due from the client, due from Second Set, or done. "Client can tick it" adds a Mark done button.', fields: [
+      { k: 'owner', t: 'select', l: 'Who', o: [['client', 'Due from client'], ['secondset', 'Due from Second Set']] }, { k: 'who', l: 'Person (optional, e.g. Irish)' },
+      { k: 'title', l: 'Title' }, { k: 'detail', t: 'area', l: 'Detail' }, { k: 'clientCanCheck', t: 'check', l: 'Client can tick it done' }, { k: 'done', t: 'check', l: 'Done' }, LINKS] },
+    deliverables: { title: 'Deliverables', note: 'Everything delivered. Section groups them (e.g. Your brand, Your website).', fields: [
+      { k: 'section', l: 'Section' }, { k: 'date', l: 'Date shown (e.g. Oct 23)' }, { k: 'title', l: 'Title' }, { k: 'detail', t: 'area', l: 'What it is, in plain words' },
+      { k: 'coverage', t: 'select', l: 'Covered by', o: [['included', 'Included in contract'], ['billed', 'Billed separately'], ['free', 'No charge']] }, { k: 'invoice', l: 'Invoice number (if billed)' },
+      { k: 'inProgress', t: 'check', l: 'Still in progress' }, LINKS] },
+    agreements: { title: 'Proposal and contract', note: 'One entry per project, with the proposal and signed contract as buttons.', fields: [
+      { k: 'project', l: 'Project' }, { k: 'status', l: 'Status (e.g. Contract signed)' }, { k: 'detail', t: 'area', l: 'Short description' }, LINKS] },
+    files: { title: 'Files', note: 'File cards on the Files tab. Upload files on the Uploads tab, then pick them here.', fields: [
+      { k: 'section', l: 'Section (e.g. Logos, Print files)' }, { k: 'title', l: 'Title' }, { k: 'detail', t: 'area', l: 'Detail' }, { k: 'updated', l: 'Updated (e.g. Oct 22)' }, LINKS] },
+    training: { title: 'Training', note: 'Paste an Unlisted YouTube link. Leave it blank to show "Video coming soon".', fields: [
+      { k: 'section', l: 'Section' }, { k: 'title', l: 'Title' }, { k: 'detail', t: 'area', l: 'Detail' }, { k: 'audience', l: 'For (e.g. Ali, Irish)' }, { k: 'video', l: 'YouTube link' }, LINKS] },
+    logins: { title: 'Logins', note: 'Never put passwords here. Passwords live in the client\'s Bitwarden vault.', fields: [
+      { k: 'service', l: 'Service' }, { k: 'detail', l: 'What it is for' }, { k: 'loginEmail', l: 'Logs in with' }, { k: 'access', l: 'Who has access' }, { k: 'owner', l: 'Owner' }, { k: 'note', l: 'Note' }] },
+    reports: { title: 'Ad reports', note: 'Only shown when Advertising is switched on in Settings.', fields: [
+      { k: 'period', l: 'Period (e.g. Oct 1 to 31)' }, { k: 'title', l: 'Title' }, { k: 'summary', t: 'area', l: 'Summary in plain words' }, LINKS] },
+  };
+  var TABS = [['settings', 'Settings'], ['todos', 'To-dos'], ['deliverables', 'Deliverables'], ['agreements', 'Proposal & contract'], ['uploads', 'Uploads'], ['files', 'Files'], ['training', 'Training'], ['logins', 'Logins'], ['reports', 'Ad reports']];
+
+  /* ---------- editor ---------- */
+  function renderEditor() {
+    var e = $('#editor');
+    e.innerHTML = '<div class="row" style="align-items:center"><h2 style="flex:1 1 auto">' + esc(client.name || 'New client') + '</h2>' +
+      (client.id ? '<button class="btn ghost sm" style="flex:0 0 auto" type="button" id="preview">Preview as client</button>' : '') + '</div>' +
+      '<div class="tabs" role="tablist">' + TABS.map(function (t) { return '<button type="button" role="tab" data-tab="' + t[0] + '" aria-selected="' + (t[0] === tab) + '">' + t[1] + '</button>'; }).join('') + '</div>' +
+      '<div id="pane"></div>' +
+      '<div class="sticky"><button class="btn" id="save" type="button">Save changes</button><span class="muted" id="dirty">' + (dirty ? 'Unsaved changes' : 'All changes saved') + '</span></div>';
+    e.querySelectorAll('[data-tab]').forEach(function (b) { b.addEventListener('click', function () { collect(); tab = b.getAttribute('data-tab'); renderEditor(); }); });
+    $('#save').addEventListener('click', save);
+    // window.open keeps the opener, so the preview tab inherits this tab's admin token.
+    var pv = $('#preview');
+    if (pv) pv.addEventListener('click', function () { if (dirty) toast('Save first to preview your latest changes.'); window.open('/portal?preview=' + encodeURIComponent(client.id), '_blank'); });
+    renderPane();
+  }
+
+  function markDirty() { dirty = true; var d = $('#dirty'); if (d) d.textContent = 'Unsaved changes'; }
+
+  function renderPane() {
+    var p = $('#pane');
+    if (tab === 'settings') return renderSettings(p);
+    if (tab === 'uploads') return renderUploads(p);
+    var s = SCHEMAS[tab];
+    var items = client[tab] || [];
+    p.innerHTML = '<p class="muted" style="margin:0">' + esc(s.note) + '</p>' +
+      items.map(function (it, i) { return entryHtml(s, it, i, items.length); }).join('') +
+      '<button class="btn ghost" type="button" id="add" style="margin-top:12px">+ Add</button>';
+    p.addEventListener('input', markDirty); p.addEventListener('change', markDirty);
+    $('#add').addEventListener('click', function () { collect(); var blank = { id: rid() }; s.fields.forEach(function (f) { blank[f.k] = f.t === 'check' ? false : f.t === 'links' ? [] : f.t === 'select' ? f.o[0][0] : ''; }); client[tab].push(blank); markDirty(); renderPane(); });
+    p.querySelectorAll('[data-act]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        collect(); var i = +b.getAttribute('data-i'), act = b.getAttribute('data-act'), arr = client[tab];
+        if (act === 'del') { if (!confirm('Remove this entry?')) return; arr.splice(i, 1); }
+        if (act === 'up' && i > 0) arr.splice(i - 1, 0, arr.splice(i, 1)[0]);
+        if (act === 'down' && i < arr.length - 1) arr.splice(i + 1, 0, arr.splice(i, 1)[0]);
+        if (act === 'addlink') arr[i].links = (arr[i].links || []).concat([{ label: 'Download', fileId: '', url: '' }]);
+        if (act === 'dellink') arr[i].links.splice(+b.getAttribute('data-j'), 1);
+        markDirty(); renderPane();
+      });
+    });
+  }
+
+  function entryHtml(s, it, i, n) {
+    var html = '<div class="entry" data-i="' + i + '">';
+    var row = [];
+    s.fields.forEach(function (f) {
+      var v = it[f.k];
+      var name = 'data-k="' + f.k + '"';
+      if (f.t === 'links') {
+        html += (row.length ? '<div class="row">' + row.join('') + '</div>' : ''); row = [];
+        html += '<div><span class="lbl">' + esc(f.l) + '</span><div class="links">' + (v || []).map(function (l, j) {
+          var opts = '<option value="">Web link (paste below)</option>' + uploads.map(function (u) { return '<option value="' + u.id + '"' + (l.fileId === u.id ? ' selected' : '') + '>' + esc(u.name) + '</option>'; }).join('');
+          return '<div class="link" data-j="' + j + '"><input type="text" data-lk="label" value="' + esc(l.label) + '" placeholder="Button text"><div><select data-lk="fileId">' + opts + '</select><input type="url" data-lk="url" value="' + esc(l.url || '') + '" placeholder="https://… (if not a file)" style="margin-top:4px"></div><button class="btn danger sm" type="button" data-act="dellink" data-i="' + i + '" data-j="' + j + '">Remove</button></div>';
+        }).join('') + '</div><button class="btn ghost sm" type="button" data-act="addlink" data-i="' + i + '" style="margin-top:6px">+ Button</button></div>';
+        return;
+      }
+      var field;
+      if (f.t === 'area') field = '<div style="flex-basis:100%"><label>' + esc(f.l) + '</label><textarea ' + name + '>' + esc(v) + '</textarea></div>';
+      else if (f.t === 'check') field = '<div><label class="check"><input type="checkbox" ' + name + (v ? ' checked' : '') + '> ' + esc(f.l) + '</label></div>';
+      else if (f.t === 'select') field = '<div><label>' + esc(f.l) + '</label><select ' + name + '>' + f.o.map(function (o) { return '<option value="' + o[0] + '"' + (v === o[0] ? ' selected' : '') + '>' + esc(o[1]) + '</option>'; }).join('') + '</select></div>';
+      else field = '<div><label>' + esc(f.l) + '</label><input type="text" ' + name + ' value="' + esc(v) + '"></div>';
+      row.push(field);
+    });
+    if (row.length) html += '<div class="row">' + row.join('') + '</div>';
+    html += '<div class="bar"><button class="btn ghost sm" type="button" data-act="up" data-i="' + i + '"' + (i === 0 ? ' disabled' : '') + '>Move up</button><button class="btn ghost sm" type="button" data-act="down" data-i="' + i + '"' + (i === n - 1 ? ' disabled' : '') + '>Move down</button><button class="btn danger sm" type="button" data-act="del" data-i="' + i + '">Remove</button></div></div>';
+    return html;
+  }
+
+  /** Copies what is on screen back into `client`. */
+  function collect() {
+    if (!client) return;
+    if (tab === 'settings') {
+      var p = $('#pane'); if (!p || !$('#f-name', p)) return;
+      client.name = $('#f-name').value.trim(); client.business = $('#f-business').value.trim(); client.greeting = $('#f-greeting').value.trim();
+      client.emails = $('#f-emails').value.split(/[\s,;]+/).map(function (x) { return x.trim(); }).filter(Boolean);
+      client.stripeCustomerId = $('#f-stripe').value.trim(); client.vaultUrl = $('#f-vault').value.trim();
+      client.services = { ads: $('#f-ads').checked }; client.headline = $('#f-headline').value.trim(); client.updated = $('#f-updated').value.trim();
+      if (!client.id) client.id = '';
+      return;
+    }
+    if (!SCHEMAS[tab]) return;
+    document.querySelectorAll('#pane .entry').forEach(function (el) {
+      var it = client[tab][+el.getAttribute('data-i')];
+      el.querySelectorAll('[data-k]').forEach(function (inp) { it[inp.getAttribute('data-k')] = inp.type === 'checkbox' ? inp.checked : inp.value; });
+      var links = [];
+      el.querySelectorAll('.link').forEach(function (l) {
+        var fid = $('[data-lk="fileId"]', l).value, url = $('[data-lk="url"]', l).value.trim(), label = $('[data-lk="label"]', l).value.trim();
+        links.push(fid ? { label: label, fileId: fid } : { label: label, url: url });
+      });
+      if (el.querySelector('.links')) it.links = links;
+    });
+  }
+
+  function renderSettings(p) {
+    var opts = '<option value="">Not linked</option>' + customers.map(function (c) { return '<option value="' + esc(c.id) + '"' + (client.stripeCustomerId === c.id ? ' selected' : '') + '>' + esc(c.name || c.email) + ' (' + esc(c.email) + ')</option>'; }).join('');
+    if (client.stripeCustomerId && !customers.some(function (c) { return c.id === client.stripeCustomerId; })) opts += '<option value="' + esc(client.stripeCustomerId) + '" selected>' + esc(client.stripeCustomerId) + '</option>';
+    p.innerHTML =
+      '<div class="row"><div><label for="f-name">Client name</label><input id="f-name" type="text" value="' + esc(client.name) + '"></div><div><label for="f-business">Business</label><input id="f-business" type="text" value="' + esc(client.business) + '"></div><div><label for="f-greeting">Greeting name (Hi, …)</label><input id="f-greeting" type="text" value="' + esc(client.greeting) + '"></div></div>' +
+      '<div class="row" style="margin-top:10px"><div style="flex-basis:100%"><label for="f-emails">Emails that can log in (one per line)</label><textarea id="f-emails">' + esc((client.emails || []).join('\n')) + '</textarea></div></div>' +
+      '<div class="row" style="margin-top:10px"><div><label for="f-stripe">Stripe customer (for billing)</label><select id="f-stripe">' + opts + '</select></div><div><label for="f-vault">Bitwarden vault link</label><input id="f-vault" type="url" value="' + esc(client.vaultUrl) + '" placeholder="https://vault.bitwarden.com/"></div></div>' +
+      '<div class="row" style="margin-top:10px"><div><label for="f-headline">Overview line under "Hi, …"</label><input id="f-headline" type="text" value="' + esc(client.headline) + '"></div><div><label for="f-updated">"Updated" text (e.g. Nov 3 by Denessa)</label><input id="f-updated" type="text" value="' + esc(client.updated) + '"></div></div>' +
+      '<label class="check" style="margin-top:10px"><input id="f-ads" type="checkbox"' + (client.services && client.services.ads ? ' checked' : '') + '> Advertising is in this client\'s contract (shows the Ad reports tab)</label>' +
+      (client.id ? '<p class="muted" style="font-size:13px">Client ID: ' + esc(client.id) + '</p>' : '<p class="muted" style="font-size:13px">The client ID is made from the name when you first save.</p>');
+    p.addEventListener('input', markDirty); p.addEventListener('change', markDirty);
+  }
+
+  function renderUploads(p) {
+    if (!client.id) { p.innerHTML = '<p class="muted">Save the client first, then upload files.</p>'; return; }
+    p.innerHTML = '<p class="muted" style="margin:0">Upload a file here, then add it as a button on Deliverables, Files, Proposal & contract or Training.</p>' +
+      '<div class="row" style="margin-top:12px"><div><input type="file" id="up" multiple></div></div><div id="prog"></div>' +
+      '<table style="margin-top:12px"><thead><tr><th>File</th><th>Size</th><th>Uploaded</th><th></th></tr></thead><tbody>' +
+      (uploads.map(function (u) { return '<tr><td>' + esc(u.name) + (u.uploaded ? '' : ' <span class="muted">(incomplete)</span>') + '</td><td>' + (u.size / 1048576).toFixed(1) + ' MB</td><td>' + esc((u.uploaded || '').slice(0, 10)) + '</td><td style="text-align:right"><button class="btn danger sm" type="button" data-del="' + u.id + '">Delete</button></td></tr>'; }).join('') || '<tr><td colspan="4" class="muted">No files yet.</td></tr>') +
+      '</tbody></table>';
+    $('#up').addEventListener('change', async function (e) { for (var f of e.target.files) await upload(f); await loadUploads(); renderPane(); });
+    p.querySelectorAll('[data-del]').forEach(function (b) {
+      b.addEventListener('click', async function () {
+        if (!confirm('Delete this file? Any buttons using it will disappear for the client.')) return;
+        try { await call('admin_file_delete', { clientId: client.id, fileId: b.getAttribute('data-del') }); await loadUploads(); renderPane(); toast('Deleted.'); } catch (err) { toast(err.message); }
+      });
+    });
+  }
+
+  async function upload(file) {
+    var prog = $('#prog'); prog.innerHTML = '<p>' + esc(file.name) + '</p><progress max="100" value="0"></progress>';
+    try {
+      var s = await call('admin_file_start', { clientId: client.id, name: file.name, type: file.type, size: file.size });
+      for (var n = 0; n < s.chunks; n++) {
+        var part = file.slice(n * s.chunkBytes, (n + 1) * s.chunkBytes);
+        var res = await fetch(API + '?action=admin_file_chunk&clientId=' + encodeURIComponent(client.id) + '&fileId=' + s.fileId + '&n=' + n, { method: 'POST', headers: { authorization: 'Bearer ' + token, 'content-type': 'application/octet-stream' }, body: part });
+        if (!res.ok) throw new Error('Upload failed on part ' + (n + 1) + '.');
+        $('progress', prog).value = Math.round((n + 1) / s.chunks * 100);
+      }
+      toast('Uploaded ' + file.name);
+    } catch (err) { toast(err.message); }
+    prog.innerHTML = '';
+  }
+
+  async function save() {
+    collect();
+    var btn = $('#save'); btn.disabled = true; btn.textContent = 'Saving…';
+    try {
+      var r = await call('admin_save', { client: client });
+      client = r.client; dirty = false;
+      renderList((await call('admin_clients')).clients);
+      await loadUploads(); renderEditor(); toast('Saved. The client sees it on their next page load.');
+    } catch (err) { toast(err.message); btn.disabled = false; btn.textContent = 'Save changes'; }
+  }
+
+  window.addEventListener('beforeunload', function (e) { if (dirty) { e.preventDefault(); e.returnValue = ''; } });
+  if (token) start().catch(function () { signOut(); });
+})();
+</script>
+</body>
+</html>
