@@ -296,3 +296,17 @@ test('billing degrades gracefully without a Stripe key', async () => {
   assert.equal(me.body.portal.invoices.length, 0);
   assert.match(me.body.portal.billingError, /not connected/);
 });
+
+test('empty file cards and training without a video stay hidden', async () => {
+  const s = setup();
+  await withClients(s);
+  const { cookie } = await loginAs(s, 'ali@escrowali.com');
+  await s.admin('admin_save', { client: { ...ALI,
+    files: [{ id: 'f-a', section: 'Logos', title: 'Coming soon' }, { id: 'f-b', section: 'Logos', title: 'Web', links: [{ label: 'Open', url: 'https://example.com' }] }],
+    training: [{ id: 't-a', title: 'Not filmed yet' }, { id: 't-b', title: 'Done', video: 'https://youtu.be/dQw4w9WgXcQ' }],
+  } });
+  const p = (await s.j('me', { method: 'GET', cookie })).body.portal;
+  assert.deepEqual(p.files.map((f) => f.id), ['f-b']);
+  assert.deepEqual(p.training.map((t) => t.id), ['t-b']);
+  assert.equal(p.hasBilling, true);
+});

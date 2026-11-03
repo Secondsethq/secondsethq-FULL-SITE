@@ -184,7 +184,14 @@ input[type=email]:focus,a:focus-visible,button:focus-visible{outline:2px solid v
 
   /* ---------- shell ---------- */
   function tabs() {
-    var t = [['overview', 'Overview'], ['billing', 'Billing'], ['agreements', 'Proposal and contract'], ['deliverables', 'Deliverables'], ['files', 'Files'], ['training', 'Training'], ['logins', 'Logins']];
+    var has = function (k) { return (data[k] || []).length > 0; };
+    var t = [['overview', 'Overview']];
+    if (data.hasBilling !== false) t.push(['billing', 'Billing']);
+    if (has('agreements')) t.push(['agreements', 'Proposal and contract']);
+    if (has('deliverables')) t.push(['deliverables', 'Deliverables']);
+    if (has('files')) t.push(['files', 'Files']);
+    if (has('training')) t.push(['training', 'Training']);
+    if (has('logins')) t.push(['logins', 'Logins']);
     if (data.services && data.services.ads) t.push(['reports', 'Ad reports']);
     return t;
   }

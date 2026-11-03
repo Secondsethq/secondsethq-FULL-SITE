@@ -31,7 +31,7 @@ Each email can belong to only one client. Removing an email logs that person out
 Uploads tab → pick files. Large files upload in 4 MB pieces, so any normal size works (limit 500 MB per file). Then on Deliverables, Files, Proposal & contract or Training, click **+ Button** and pick the uploaded file. Deleting an upload removes its buttons for the client.
 
 ## Training videos
-Upload to YouTube as **Unlisted** (not Private: private videos will not play in the portal). Paste the link in the Training entry. Blank shows "Video coming soon".
+Upload to YouTube as **Unlisted** (not Private: private videos will not play in the portal). Paste the link in the Training entry. Entries with no video, and file cards with no button, stay hidden from the client. Tabs with nothing in them are hidden too.
 
 ## How billing shows
 Live from Stripe on every page load. Open invoices show **Pay invoice** (Stripe's hosted page). Draft invoices show as **Scheduled** with no pay link. Void invoices are hidden. Lines containing "processing fee" are left out of the description.
