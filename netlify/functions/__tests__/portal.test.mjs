@@ -310,3 +310,17 @@ test('empty file cards and training without a video stay hidden', async () => {
   assert.deepEqual(p.training.map((t) => t.id), ['t-b']);
   assert.equal(p.hasBilling, true);
 });
+
+test('a client can be linked to more than one Stripe customer', async () => {
+  const s = setup();
+  await withClients(s);
+  const { cookie } = await loginAs(s, 'ali@escrowali.com');
+  await s.admin('admin_save', { client: { ...ALI, stripeCustomerId: 'cus_ALI, cus_EXTRA,cus_ALI, not-a-customer' } });
+  const saved = (await s.admin('admin_get', undefined, 'GET', { id: 'ali-jackson' })).body.client;
+  assert.equal(saved.stripeCustomerId, 'cus_ALI,cus_EXTRA');
+  s.stripeCalls.length = 0;
+  const p = (await s.j('me', { method: 'GET', cookie })).body.portal;
+  assert.deepEqual(s.stripeCalls, ['cus_ALI', 'cus_EXTRA']);
+  assert.equal(p.hasBilling, true);
+  assert.equal(p.stripeCustomerId, undefined);
+});

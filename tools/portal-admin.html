@@ -247,7 +247,7 @@ progress{width:100%}
       var p = $('#pane'); if (!p || !$('#f-name', p)) return;
       client.name = $('#f-name').value.trim(); client.business = $('#f-business').value.trim(); client.greeting = $('#f-greeting').value.trim();
       client.emails = $('#f-emails').value.split(/[\s,;]+/).map(function (x) { return x.trim(); }).filter(Boolean);
-      client.stripeCustomerId = $('#f-stripe').value.trim(); client.vaultUrl = $('#f-vault').value.trim();
+      client.stripeCustomerId = Array.prototype.map.call($('#f-stripe').selectedOptions, function (o) { return o.value; }).filter(Boolean).join(','); client.vaultUrl = $('#f-vault').value.trim();
       client.services = { ads: $('#f-ads').checked }; client.headline = $('#f-headline').value.trim(); client.updated = $('#f-updated').value.trim();
       if (!client.id) client.id = '';
       return;
@@ -266,12 +266,13 @@ progress{width:100%}
   }
 
   function renderSettings(p) {
-    var opts = '<option value="">Not linked</option>' + customers.map(function (c) { return '<option value="' + esc(c.id) + '"' + (client.stripeCustomerId === c.id ? ' selected' : '') + '>' + esc(c.name || c.email) + ' (' + esc(c.email) + ')</option>'; }).join('');
-    if (client.stripeCustomerId && !customers.some(function (c) { return c.id === client.stripeCustomerId; })) opts += '<option value="' + esc(client.stripeCustomerId) + '" selected>' + esc(client.stripeCustomerId) + '</option>';
+    var linked = String(client.stripeCustomerId || '').split(',').filter(Boolean);
+    var opts = customers.map(function (c) { return '<option value="' + esc(c.id) + '"' + (linked.indexOf(c.id) > -1 ? ' selected' : '') + '>' + esc(c.name || c.email) + ' (' + esc(c.email) + ')</option>'; }).join('');
+    linked.forEach(function (id) { if (!customers.some(function (c) { return c.id === id; })) opts += '<option value="' + esc(id) + '" selected>' + esc(id) + '</option>'; });
     p.innerHTML =
       '<div class="row"><div><label for="f-name">Client name</label><input id="f-name" type="text" value="' + esc(client.name) + '"></div><div><label for="f-business">Business</label><input id="f-business" type="text" value="' + esc(client.business) + '"></div><div><label for="f-greeting">Greeting name (Hi, …)</label><input id="f-greeting" type="text" value="' + esc(client.greeting) + '"></div></div>' +
       '<div class="row" style="margin-top:10px"><div style="flex-basis:100%"><label for="f-emails">Emails that can log in (one per line)</label><textarea id="f-emails">' + esc((client.emails || []).join('\n')) + '</textarea></div></div>' +
-      '<div class="row" style="margin-top:10px"><div><label for="f-stripe">Stripe customer (for billing)</label><select id="f-stripe">' + opts + '</select></div><div><label for="f-vault">Bitwarden vault link</label><input id="f-vault" type="url" value="' + esc(client.vaultUrl) + '" placeholder="https://vault.bitwarden.com/"></div></div>' +
+      '<div class="row" style="margin-top:10px"><div><label for="f-stripe">Stripe customers (for billing)</label><select id="f-stripe" multiple size="4">' + opts + '</select><span class="muted" style="font-size:12px">Hold Cmd (Mac) or Ctrl to pick more than one. Invoices from all of them show together.</span></div><div><label for="f-vault">Bitwarden vault link</label><input id="f-vault" type="url" value="' + esc(client.vaultUrl) + '" placeholder="https://vault.bitwarden.com/"></div></div>' +
       '<div class="row" style="margin-top:10px"><div><label for="f-headline">Overview line under "Hi, …"</label><input id="f-headline" type="text" value="' + esc(client.headline) + '"></div><div><label for="f-updated">"Updated" text (e.g. Nov 3 by Denessa)</label><input id="f-updated" type="text" value="' + esc(client.updated) + '"></div></div>' +
       '<label class="check" style="margin-top:10px"><input id="f-ads" type="checkbox"' + (client.services && client.services.ads ? ' checked' : '') + '> Advertising is in this client\'s contract (shows the Ad reports tab)</label>' +
       (client.id ? '<p class="muted" style="font-size:13px">Client ID: ' + esc(client.id) + '</p>' : '<p class="muted" style="font-size:13px">The client ID is made from the name when you first save.</p>');

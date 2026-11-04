@@ -134,7 +134,8 @@ export function cleanClient(input, existing = {}) {
     business: str(c.business, 120),
     greeting: str(c.greeting, 60),
     emails,
-    stripeCustomerId: /^cus_[A-Za-z0-9]+$/.test(String(c.stripeCustomerId || '')) ? String(c.stripeCustomerId) : '',
+    // One or more Stripe customers (e.g. a client billed under two business names), comma-separated.
+    stripeCustomerId: [...new Set(String(c.stripeCustomerId || '').split(',').map((x) => x.trim()).filter((x) => /^cus_[A-Za-z0-9]+$/.test(x)))].slice(0, 4).join(','),
     vaultUrl: /^https:\/\/[^\s"'<>]+$/i.test(String(c.vaultUrl || '')) ? str(c.vaultUrl, 600) : '',
     services: { ads: !!(c.services && c.services.ads) },
     headline: str(c.headline, 200),
@@ -350,11 +351,13 @@ export function makeHandler({ getStore, fetch, env = {}, now = () => Date.now() 
     if (!t || !safeEqual(t, env.ADMIN_TOKEN)) throw new HttpError(401, 'Unauthorized.');
   }
 
-  async function stripeInvoices(customerId) {
-    if (!customerId) return { rows: [], error: '' };
+  async function stripeInvoices(customerIds) {
+    const ids = String(customerIds || '').split(',').filter(Boolean);
+    if (!ids.length) return { rows: [], error: '' };
     if (!env.STRIPE_SECRET_KEY) return { rows: [], error: 'Billing is not connected yet.' };
     try {
       const all = [];
+      for (const customerId of ids) {
       let after = '';
       for (let page = 0; page < 5; page++) {
         const qs = new URLSearchParams({ customer: customerId, limit: '100' });
@@ -368,6 +371,8 @@ export function makeHandler({ getStore, fetch, env = {}, now = () => Date.now() 
         if (!body.has_more || !body.data.length) break;
         after = body.data[body.data.length - 1].id;
       }
+      }
+      all.sort((a, b) => (b.created || 0) - (a.created || 0));
       return { rows: mapInvoices(all, now()), error: '' };
     } catch {
       return { rows: [], error: 'Billing is unavailable right now.' };
