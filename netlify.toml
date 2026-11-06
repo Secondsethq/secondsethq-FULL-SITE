@@ -21,6 +21,13 @@
     Cache-Control = "public, max-age=0, must-revalidate"
 
 [[headers]]
+  for = "/denessa.vcf"
+  [headers.values]
+    Content-Type = "text/vcard; charset=utf-8"
+    Content-Disposition = "inline; filename=\"denessa-appleton.vcf\""
+    Cache-Control = "public, max-age=3600"
+
+[[headers]]
   for = "/tools/*"
   [headers.values]
     X-Robots-Tag = "noindex, nofollow, noarchive"
