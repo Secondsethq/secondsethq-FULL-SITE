@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Client Portal | Second Set</title>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="referrer" content="no-referrer">
+<link rel="icon" type="image/png" href="/assets/favicon-32.png"><link rel="icon" href="/assets/favicon.ico" sizes="any"><link rel="apple-touch-icon" href="/assets/favicon-180.png">
+<link rel="preconnect" href="https://use.typekit.net" crossorigin>
+<link rel="stylesheet" href="https://use.typekit.net/dgx7ejb.css">
+<style>
+:root{--bone:#F0EFE9;--ink:#080505;--teal:#117997;--teal-d:#0c5a70;--coral:#F44E2D;--label:#6E635B;--rust:#804C3E;--line:#e4e1d8;--soft:#F7F6F2;
+--display:"neue-haas-grotesk-display",Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+--body:"neue-haas-grotesk-text",Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+--mono:ui-monospace,Menlo,Consolas,monospace;
+--shadow:0 1px 2px rgba(8,5,5,.06),0 6px 20px rgba(8,5,5,.06)}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bone);color:var(--ink);font:16px/1.5 var(--body);-webkit-font-smoothing:antialiased}
+a{color:var(--teal)}a:hover{color:var(--teal-d)}
+h1,h2,h3{font-family:var(--display);font-weight:700;letter-spacing:-.02em;margin:0}
+h1{font-size:clamp(28px,5vw,38px);letter-spacing:-.024em}
+h2{font-size:22px}
+h3{font-size:17px}
+.lbl{font:500 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--label)}
+.muted{color:var(--label)}
+.sub{color:var(--rust);margin:6px 0 0}
+.wrap{max-width:1200px;margin:0 auto;padding:0 20px}
+.card{background:#fff;border-radius:16px;box-shadow:var(--shadow)}
+.pad{padding:22px}
+.stack{display:flex;flex-direction:column;gap:14px}
+.grid{display:grid;gap:16px}
+.g4{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(290px,1fr));align-items:start}
+.g2{grid-template-columns:repeat(auto-fit,minmax(320px,1fr));align-items:start}
+.stat .n{font:700 28px var(--display);margin-top:8px;letter-spacing:-.02em}
+.stat .d{font-size:13px;color:var(--label);margin-top:2px}
+.chip{display:inline-block;font:600 12px var(--body);padding:3px 9px;border-radius:999px;white-space:nowrap;background:var(--line);color:#3a302c}
+.c-due{background:#fde3dc;color:#8a2a14}.c-info{background:#d6ebf1;color:#0c5a70}.c-warn{background:#fff3d6;color:#6b4a00}
+.btn{font:600 14px var(--body);border:0;border-radius:10px;padding:10px 16px;min-height:44px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;background:var(--teal);color:#fff;white-space:nowrap}
+.btn:hover{background:var(--teal-d);color:#fff}
+.btn.ghost{background:var(--bone);color:var(--ink)}.btn.ghost:hover{background:var(--line);color:var(--ink)}
+.btn[disabled]{opacity:.6;cursor:default}
+.item{background:var(--soft);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.item strong{font-size:15px}
+.item .d{font-size:14px;color:var(--label)}
+.row{display:flex;flex-wrap:wrap;gap:12px 16px;justify-content:space-between;align-items:center;padding:16px 0;border-top:1px solid #efece5}
+.row:first-of-type{border-top:0}
+.row .t{flex:1 1 420px;display:flex;flex-direction:column;gap:5px;min-width:0}
+.row .d{font-size:15px;color:var(--label)}
+.meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th{text-align:left;font:500 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--label);padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:14px 12px;border-bottom:1px solid #efece5;vertical-align:middle}
+td.nw{white-space:nowrap}
+.scroll{overflow-x:auto;max-width:100%;position:relative}
+main .wrap>*,.card,.stack>*{min-width:0}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+/* header */
+.top{background:#fff;border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;justify-content:space-between;padding-top:12px;padding-bottom:12px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
+.brand b{font:700 19px var(--display);letter-spacing:-.02em}
+.who{display:flex;align-items:center;gap:10px;font-size:14px}
+.avatar{width:36px;height:36px;border-radius:50%;background:var(--teal);color:#fff;display:grid;place-items:center;font-weight:600;font-size:14px;flex:none}
+.nav{display:flex;gap:4px;overflow-x:auto;padding:8px 0 10px;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav a{padding:9px 14px;border-radius:999px;text-decoration:none;color:#3a302c;font-weight:500;font-size:15px;white-space:nowrap}
+.nav a:hover{background:var(--line);color:var(--ink)}
+.nav a[aria-current="page"]{background:var(--ink);color:var(--bone)}
+main{padding:28px 0 64px}
+main .wrap{display:flex;flex-direction:column;gap:24px}
+.head{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;justify-content:space-between}
+/* login */
+.login{min-height:100vh;display:grid;place-items:center;padding:24px}
+.login .card{width:100%;max-width:420px;padding:32px 28px}
+label.f{display:block;font-size:14px;font-weight:600;margin:18px 0 6px}
+input[type=email]{width:100%;font:16px var(--body);padding:12px 14px;border:1px solid #d9d4ca;border-radius:10px;background:#fff;min-height:48px}
+input[type=email]:focus,a:focus-visible,button:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+.msg{margin-top:14px;font-size:14px}
+.err{color:#8a2a14}
+/* video */
+.player{position:relative;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#0f2a3a;display:block;width:100%;border:0;padding:0;cursor:pointer}
+.player img{width:100%;height:100%;object-fit:cover;display:block;opacity:.9}
+.player .play{position:absolute;inset:0;margin:auto;width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,.94);display:grid;place-items:center}
+.player.soon{cursor:default;display:grid;place-items:center;color:#cfe3ea;font-size:14px}
+.player iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.vault{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between}
+.empty{color:var(--label);font-size:15px;padding:8px 0}
+#toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:var(--ink);color:var(--bone);padding:10px 16px;border-radius:10px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s;max-width:calc(100% - 32px);z-index:5}
+#toast.on{opacity:1}
+@media (max-width:600px){.pad{padding:18px}.row .t{flex-basis:100%}}
+@media (prefers-reduced-motion:reduce){#toast{transition:none}}
+</style>
+</head>
+<body>
+<div id="app"><p class="wrap muted" style="padding:40px 20px">Loading your portal…</p></div>
+<div id="toast" role="status"></div>
+<script>
+(function () {
+  'use strict';
+  var API = '/.netlify/functions/portal';
+  var app = document.getElementById('app');
+  var data = null;
+  var preview = /[?&]preview=/.test(location.search);
+
+  /* ---------- small helpers ---------- */
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function money(cents) { return (cents / 100).toLocaleString('en-US', { style: 'currency', currency: 'USD' }); }
+  function shortDate(iso) { if (!iso) return ''; var d = new Date(iso); return isNaN(d) ? esc(iso) : d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'America/Los_Angeles' }); }
+  function toast(t) { var el = document.getElementById('toast'); el.textContent = t; el.classList.add('on'); setTimeout(function () { el.classList.remove('on'); }, 3000); }
+  function initials(n) { return String(n || '?').split(/\s+/).filter(Boolean).slice(0, 2).map(function (w) { return w[0].toUpperCase(); }).join(''); }
+  function plural(n, one, many) { return n + ' ' + (n === 1 ? one : many); }
+
+  async function api(action, opts) {
+    opts = opts || {};
+    var init = { method: opts.body ? 'POST' : 'GET', credentials: 'same-origin', headers: {} };
+    if (opts.body) { init.headers['content-type'] = 'application/json'; init.body = JSON.stringify(opts.body); }
+    var res = await fetch(API + '?action=' + action + (opts.query || ''), init);
+    var body = {}; try { body = await res.json(); } catch (e) {}
+    return { status: res.status, body: body };
+  }
+
+  var LOGO = '<svg width="40" height="26" viewBox="0 0 40 26" aria-hidden="true"><circle cx="13" cy="13" r="12" fill="#117997"/><circle cx="25" cy="13" r="10" fill="none" stroke="#F44E2D" stroke-width="4"/></svg>';
+
+  /* ---------- login ---------- */
+  function showLogin(message, isError) {
+    app.innerHTML =
+      '<div class="login"><div class="card">' +
+      '<div class="brand">' + LOGO + '<b>Second Set</b></div>' +
+      '<h1 style="margin-top:22px;font-size:28px">Client portal</h1>' +
+      '<p class="muted" style="margin:8px 0 0">Enter the email you use with us. We\'ll send you a link to log in, no password needed.</p>' +
+      '<form id="loginForm" novalidate><label class="f" for="email">Email</label>' +
+      '<input id="email" type="email" autocomplete="email" required inputmode="email">' +
+      '<button class="btn" style="width:100%;margin-top:14px" type="submit">Email me a login link</button></form>' +
+      '<p class="msg ' + (isError ? 'err' : 'muted') + '" id="loginMsg">' + esc(message || '') + '</p>' +
+      '</div></div>';
+    document.getElementById('loginForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      var btn = e.target.querySelector('button'); var email = document.getElementById('email').value.trim();
+      var msg = document.getElementById('loginMsg');
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { msg.className = 'msg err'; msg.textContent = 'Enter a valid email address.'; return; }
+      btn.disabled = true; btn.textContent = 'Sending…';
+      var r = await api('login', { body: { email: email } });
+      btn.disabled = false; btn.textContent = 'Email me a login link';
+      if (r.status === 200) {
+        app.querySelector('.card').innerHTML =
+          '<div class="brand">' + LOGO + '<b>Second Set</b></div>' +
+          '<h1 style="margin-top:22px;font-size:28px">Check your email</h1>' +
+          '<p class="muted" style="margin:8px 0 0">If ' + esc(email) + ' is on file, a login link is on its way. It works once and expires in 20 minutes.</p>' +
+          '<p class="muted" style="margin:16px 0 0;font-size:14px">Nothing after a few minutes? Check spam, or <a href="/portal">try again</a>.</p>';
+      } else { msg.className = 'msg err'; msg.textContent = r.body.message || 'Something went wrong. Try again.'; }
+    });
+  }
+
+  async function boot() {
+    var m = location.hash.match(/login=([A-Za-z0-9_-]+)/);
+    if (m) {
+      history.replaceState(null, '', location.pathname + location.search);
+      app.innerHTML = '<p class="wrap" style="padding:40px 20px">Logging you in…</p>';
+      var v = await api('verify', { body: { token: m[1] } });
+      if (v.status !== 200) return showLogin(v.body.message || 'That link did not work. Request a new one.', true);
+    }
+    await load();
+  }
+
+  async function load() {
+    var r;
+    if (preview) {
+      var id = (location.search.match(/[?&]preview=([a-z0-9-]+)/) || [])[1];
+      var tk = sessionStorage.getItem('ss_portal_admin_token') || '';
+      var res = await fetch(API + '?action=admin_preview&id=' + encodeURIComponent(id || ''), { headers: { authorization: 'Bearer ' + tk } });
+      r = { status: res.status, body: await res.json().catch(function () { return {}; }) };
+    } else {
+      r = await api('me');
+    }
+    if (r.status === 401) return showLogin('');
+    if (r.status !== 200) return showLogin(r.body.message || 'The portal is unavailable right now. Try again shortly.', true);
+    data = r.body.portal;
+    render();
+  }
+
+  /* ---------- shell ---------- */
+  function tabs() {
+    var has = function (k) { return (data[k] || []).length > 0; };
+    var t = [['overview', 'Overview']];
+    if (data.hasBilling !== false) t.push(['billing', 'Billing']);
+    if (has('agreements')) t.push(['agreements', 'Proposal and contract']);
+    if (has('deliverables')) t.push(['deliverables', 'Deliverables']);
+    if (has('files')) t.push(['files', 'Files']);
+    if (has('training')) t.push(['training', 'Training']);
+    if (has('logins')) t.push(['logins', 'Logins']);
+    if (data.services && data.services.ads) t.push(['reports', 'Ad reports']);
+    return t;
+  }
+
+  function current() {
+    var h = (location.hash.match(/^#\/?([a-z]+)/) || [])[1] || 'overview';
+    return tabs().some(function (t) { return t[0] === h; }) ? h : 'overview';
+  }
+
+  function render() {
+    var cur = current();
+    var nav = tabs().map(function (t) { return '<a href="#' + t[0] + '"' + (t[0] === cur ? ' aria-current="page"' : '') + '>' + esc(t[1]) + '</a>'; }).join('');
+    app.innerHTML =
+      (preview ? '<div style="background:#fff3d6;color:#6b4a00;text-align:center;padding:8px;font-size:14px">Admin preview: this is what the client sees.</div>' : '') +
+      '<header class="top"><div class="wrap">' +
+      '<a class="brand" href="#overview">' + LOGO + '<b>Second Set</b><span class="lbl" style="margin-left:6px">Client portal</span></a>' +
+      '<div class="who"><span class="avatar" aria-hidden="true">' + esc(initials(data.name)) + '</span><span>' + esc(data.name) + (data.business ? '<br><span class="muted">' + esc(data.business) + '</span>' : '') + '</span>' +
+      (preview ? '' : '<button class="btn ghost" id="logout" type="button" style="min-height:40px;padding:8px 12px">Log out</button>') + '</div>' +
+      '</div><div class="wrap"><nav class="nav" aria-label="Portal sections">' + nav + '</nav></div></header>' +
+      '<main id="main"><div class="wrap">' + (VIEWS[cur] || VIEWS.overview)() + '</div></main>';
+    var lo = document.getElementById('logout');
+    if (lo) lo.addEventListener('click', async function () { await api('logout', { body: {} }); showLogin('You are logged out.'); });
+    wire();
+  }
+
+  window.addEventListener('hashchange', function () {
+    if (/login=/.test(location.hash)) return boot(); // login link opened in a tab already on /portal
+    if (data) { render(); window.scrollTo(0, 0); }
+  });
+
+  /* ---------- pieces ---------- */
+  function stat(label, n, d, color) { return '<div class="card pad stat"><div class="lbl">' + esc(label) + '</div><div class="n"' + (color ? ' style="color:' + color + '"' : '') + '>' + n + '</div><div class="d">' + esc(d) + '</div></div>'; }
+  function coverageChip(d) {
+    if (d.coverage === 'free') return '<span class="chip c-due">No charge</span>';
+    if (d.coverage === 'billed') return '<span class="chip c-info">' + esc(d.invoice ? 'Invoice ' + d.invoice : 'Billed separately') + '</span>';
+    return '<span class="chip">Included</span>';
+  }
+  function linkButtons(links, firstPrimary) {
+    return (links || []).map(function (l, i) {
+      var cls = 'btn' + (firstPrimary && i === 0 ? '' : ' ghost');
+      if (l.fileId) {
+        var m = data.fileMeta[l.fileId];
+        if (!m) return '';
+        return '<button type="button" class="' + cls + '" data-file="' + esc(l.fileId) + '">' + esc(l.label) + '</button>';
+      }
+      return '<a class="' + cls + '" href="' + esc(l.url) + '" target="_blank" rel="noopener noreferrer">' + esc(l.label) + '</a>';
+    }).join('');
+  }
+  function groupBy(arr, key, order) {
+    var g = {}, keys = [];
+    arr.forEach(function (x) { var k = x[key] || 'Other'; if (!g[k]) { g[k] = []; keys.push(k); } g[k].push(x); });
+    if (order) keys.sort(function (a, b) { return order.indexOf(a) - order.indexOf(b); });
+    return keys.map(function (k) { return [k, g[k]]; });
+  }
+  function head(title, sub, right) { return '<div class="head"><div><h1>' + esc(title) + '</h1>' + (sub ? '<p class="sub">' + esc(sub) + '</p>' : '') + '</div>' + (right || '') + '</div>'; }
+
+  /* ---------- views ---------- */
+  var VIEWS = {};
+
+  VIEWS.overview = function () {
+    var you = data.todos.filter(function (t) { return t.owner === 'client' && !t.done; });
+    var us = data.todos.filter(function (t) { return t.owner === 'secondset' && !t.done; });
+    var done = data.deliverables.filter(function (d) { return !d.inProgress; });
+    var free = done.filter(function (d) { return d.coverage === 'free'; }).length;
+    var b = data.billing;
+    function todoItem(t) {
+      return '<div class="item"><div class="meta"><strong>' + esc(t.title) + '</strong>' + (t.who ? '<span class="chip">' + esc(t.who) + '</span>' : '') + '</div>' +
+        (t.detail ? '<span class="d">' + esc(t.detail) + '</span>' : '') +
+        ((t.clientCanCheck || (t.links && t.links.length)) ? '<div class="actions">' + (t.clientCanCheck && !preview ? '<button type="button" class="btn" data-done="' + esc(t.id) + '">Mark done</button>' : '') + linkButtons(t.links) + '</div>' : '') + '</div>';
+    }
+    var recent = done.slice(0, 5).map(function (d) { return '<div class="item"><div class="meta"><strong>' + esc(d.title) + '</strong>' + (d.coverage === 'free' ? '<span class="chip c-due">No charge</span>' : '') + '</div>' + (d.date ? '<span class="d">' + esc(d.date) + '</span>' : '') + '</div>'; }).join('');
+    return head('Hi, ' + (data.greeting || data.name), data.headline || 'Here is everything on your account with Second Set.', data.updated ? '<p class="lbl" style="margin:0">Updated ' + esc(data.updated) + '</p>' : '') +
+      '<div class="grid g4">' +
+      (data.billingError ? stat('Billing', '—', data.billingError) : stat('Total owed', money(b.totalOwed), b.dueNowCount ? money(b.dueNow) + ' due now' : 'Nothing due right now')) +
+      stat('Waiting on you', you.length, 'Things only you can do', you.length ? '#b33a1f' : '') +
+      stat('Waiting on Second Set', us.length, 'Work we are doing now', '#117997') +
+      stat('Delivered', done.length, free ? 'Including ' + free + ' at no charge' : 'Items completed') +
+      '</div>' +
+      '<section class="stack" aria-labelledby="ws"><h2 id="ws">Where things stand</h2><div class="grid g3">' +
+      '<div class="card pad stack"><div class="meta" style="justify-content:space-between"><h3>Due from you</h3><span class="chip c-due">' + you.length + ' open</span></div>' + (you.map(todoItem).join('') || '<p class="empty">Nothing waiting on you.</p>') + '</div>' +
+      '<div class="card pad stack"><div class="meta" style="justify-content:space-between"><h3>Due from Second Set</h3><span class="chip c-info">' + us.length + ' in progress</span></div>' + (us.map(todoItem).join('') || '<p class="empty">Nothing in progress.</p>') + '</div>' +
+      '<div class="card pad stack"><div class="meta" style="justify-content:space-between"><h3>Recently completed</h3><a href="#deliverables" style="font-size:14px;font-weight:600">See all</a></div>' + (recent || '<p class="empty">Nothing yet.</p>') + '</div>' +
+      '</div></section>';
+  };
+
+  VIEWS.billing = function () {
+    if (data.billingError) return head('Billing') + '<div class="card pad"><p class="empty">' + esc(data.billingError) + '</p></div>';
+    var b = data.billing, inv = data.invoices;
+    var owed = inv.filter(function (r) { return r.state === 'due' || r.state === 'overdue' || r.state === 'scheduled'; })
+      .sort(function (a, c) { return String(a.due).localeCompare(String(c.due)); });
+    var paid = inv.filter(function (r) { return r.state === 'paid'; }).sort(function (a, c) { return String(c.paidAt).localeCompare(String(a.paidAt)); });
+    function num(r) { return r.number ? (r.url ? '<a href="' + esc(r.url) + '" target="_blank" rel="noopener noreferrer" style="font-weight:600">' + esc(r.number) + '</a>' : esc(r.number)) : '<span class="muted">Next</span>'; }
+    function stateChip(r) {
+      if (r.state === 'overdue') return '<span class="chip c-due">Overdue</span>';
+      if (r.state === 'scheduled') return '<span class="chip">Scheduled</span>';
+      var days = r.due ? Math.round((Date.parse(r.due) - Date.now()) / 864e5) : 99;
+      return days <= 2 ? '<span class="chip c-due">Due ' + (days <= 0 ? 'today' : days === 1 ? 'tomorrow' : 'soon') + '</span>' : '<span class="chip c-info">Sent</span>';
+    }
+    var owedRows = owed.map(function (r) {
+      return '<tr><td>' + num(r) + '</td><td>' + esc(r.description) + '</td><td class="nw">' + shortDate(r.due) + '</td><td class="nw">' + money(r.amount) + '</td><td>' + stateChip(r) + '</td><td style="text-align:right">' +
+        (r.url ? '<a class="btn" href="' + esc(r.url) + '" target="_blank" rel="noopener noreferrer">Pay invoice</a>' : '<span class="muted" style="font-size:13px">Pay link arrives when sent</span>') + '</td></tr>';
+    }).join('');
+    var paidRows = paid.map(function (r) {
+      return '<tr><td>' + num(r) + '</td><td>' + esc(r.description) + '</td><td class="nw">' + shortDate(r.paidAt) + '</td><td class="nw">' + money(r.amount) + '</td><td style="text-align:right">' +
+        (r.url ? '<a class="btn ghost" href="' + esc(r.url) + '" target="_blank" rel="noopener noreferrer">Receipt</a>' : '') + '</td></tr>';
+    }).join('');
+    return head('Billing', 'Every invoice on your account, what is due now and what is scheduled.') +
+      '<div class="grid g4">' +
+      stat('Total owed', money(b.totalOwed), plural(b.dueNowCount + b.scheduledCount, 'invoice', 'invoices')) +
+      stat('Due now', money(b.dueNow), plural(b.dueNowCount, 'sent invoice', 'sent invoices') + ', ready to pay') +
+      stat('Scheduled', money(b.scheduled), plural(b.scheduledCount, 'upcoming payment', 'upcoming payments')) +
+      stat('Paid to date', money(b.paid), plural(b.paidCount, 'paid invoice', 'paid invoices')) +
+      '<div class="card pad stat"><div class="lbl">How to pay</div><div style="font-weight:600;margin-top:8px">Zelle or debit card: no fee</div><div class="d">Credit cards add 3%</div></div>' +
+      '</div>' +
+      '<section class="card pad stack" aria-labelledby="ow"><h2 id="ow">What you owe</h2><p class="muted" style="margin:0;font-size:14px">Tap an invoice number to see the full invoice, or Pay invoice to pay on Stripe\'s secure page.</p>' +
+      (owedRows ? '<div class="scroll"><table><thead><tr><th scope="col">Invoice</th><th scope="col">For</th><th scope="col">Due</th><th scope="col">Amount</th><th scope="col">Status</th><th scope="col"><span class="sr">Action</span></th></tr></thead><tbody>' + owedRows + '</tbody></table></div>' : '<p class="empty">You are all paid up. Thank you!</p>') + '</section>' +
+      (paidRows ? '<section class="card pad stack" aria-labelledby="pd"><h2 id="pd">Paid</h2><div class="scroll"><table><thead><tr><th scope="col">Invoice</th><th scope="col">For</th><th scope="col">Paid</th><th scope="col">Amount</th><th scope="col"><span class="sr">Receipt</span></th></tr></thead><tbody>' + paidRows + '</tbody></table></div></section>' : '');
+  };
+
+  VIEWS.agreements = function () {
+    var cards = data.agreements.map(function (a) {
+      return '<section class="card pad stack"><div class="meta"><h2>' + esc(a.project) + '</h2>' + (a.status ? '<span class="chip">' + esc(a.status) + '</span>' : '') + '</div>' +
+        (a.detail ? '<p class="muted" style="margin:0">' + esc(a.detail) + '</p>' : '') +
+        (a.links.length ? '<div class="actions">' + linkButtons(a.links, true) + '</div>' : '<p class="empty">Documents coming soon.</p>') + '</section>';
+    }).join('');
+    return head('Proposal and contract', 'What we agreed to, in the original documents.') + (cards || '<div class="card pad"><p class="empty">Nothing here yet.</p></div>') +
+      '<p class="muted" style="margin:0;font-size:14px">Questions about any of these? Email <a href="mailto:hello@secondsethq.com">hello@secondsethq.com</a> or call <a href="tel:+14422919337">442-291-9337</a>.</p>';
+  };
+
+  VIEWS.deliverables = function () {
+    var all = data.deliverables;
+    var done = all.filter(function (d) { return !d.inProgress; });
+    var free = done.filter(function (d) { return d.coverage === 'free'; }).length;
+    var groups = groupBy(all, 'section').map(function (g) {
+      var rows = g[1].map(function (d) {
+        return '<div class="row"><div class="t"><div class="meta">' + (d.date ? '<span class="lbl">' + esc(d.date) + '</span>' : '') + (d.inProgress ? '<span class="chip c-warn">In progress</span>' : '') + coverageChip(d) + '</div><strong style="font-size:17px">' + esc(d.title) + '</strong>' + (d.detail ? '<span class="d">' + esc(d.detail) + '</span>' : '') + '</div>' +
+          (d.links.length ? '<div class="actions">' + linkButtons(d.links, true) + '</div>' : '') + '</div>';
+      }).join('');
+      return '<section class="card pad"><h2 style="margin-bottom:6px">' + esc(g[0]) + '</h2>' + rows + '</section>';
+    }).join('');
+    return head('Everything we have done for you', 'Grouped by project, newest first.') +
+      '<div class="grid g4">' + stat('Delivered', done.length, 'Items completed') + stat('No charge', free, 'Extras we gave you for free') + stat('In progress', all.length - done.length, 'Being worked on now') + '</div>' +
+      '<div class="meta" style="font-size:14px;color:#3a302c;gap:14px"><span><span class="chip">Included</span> part of your contract</span><span><span class="chip c-info">Billed separately</span> its own invoice</span><span><span class="chip c-due">No charge</span> complimentary</span></div>' +
+      (groups || '<div class="card pad"><p class="empty">Nothing here yet.</p></div>');
+  };
+
+  VIEWS.files = function () {
+    var groups = groupBy(data.files, 'section').map(function (g) {
+      var cards = g[1].map(function (f) {
+        var types = (f.links || []).map(function (l) { var m = l.fileId && data.fileMeta[l.fileId]; return m ? (m.name.split('.').pop() || '').toUpperCase() : ''; }).filter(Boolean);
+        return '<div class="item" style="gap:10px"><strong style="font-size:16px">' + esc(f.title) + '</strong>' + (f.detail ? '<span class="d">' + esc(f.detail) + '</span>' : '') +
+          '<div class="meta">' + types.map(function (t) { return '<span class="chip">' + esc(t) + '</span>'; }).join('') + (f.updated ? '<span class="chip">Updated ' + esc(f.updated) + '</span>' : '') + '</div>' +
+          (f.links.length ? '<div class="actions">' + linkButtons(f.links, true) + '</div>' : '<span class="chip c-warn" style="align-self:flex-start">Coming soon</span>') + '</div>';
+      }).join('');
+      return '<section class="card pad stack"><h2>' + esc(g[0]) + '</h2><div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(250px,1fr))">' + cards + '</div></section>';
+    }).join('');
+    return head('Your files', 'Every logo, design and print file we have made for you. Always the latest version.') + (groups || '<div class="card pad"><p class="empty">Files will appear here as we deliver them.</p></div>');
+  };
+
+  function ytId(u) { var m = String(u || '').match(/[?&]v=([A-Za-z0-9_-]{11})/); return m ? m[1] : ''; }
+  VIEWS.training = function () {
+    var groups = groupBy(data.training, 'section').map(function (g) {
+      var vids = g[1].map(function (t) {
+        var id = ytId(t.video);
+        var player = id
+          ? '<button type="button" class="player" data-yt="' + esc(id) + '" aria-label="Play ' + esc(t.title) + '"><img src="https://i.ytimg.com/vi/' + esc(id) + '/hqdefault.jpg" alt="" loading="lazy"><span class="play"><svg width="20" height="22" viewBox="0 0 20 22" aria-hidden="true"><path d="M2 1l17 10L2 21z" fill="#0f2a3a"/></svg></span></button>'
+          : '<div class="player soon">Video coming soon</div>';
+        return '<div class="stack" style="gap:10px">' + player + '<div class="meta">' + (t.audience ? '<span class="chip">For ' + esc(t.audience) + '</span>' : '') + '</div><strong style="font-size:16px">' + esc(t.title) + '</strong>' + (t.detail ? '<span class="muted" style="font-size:14px">' + esc(t.detail) + '</span>' : '') + (t.links.length ? '<div class="actions">' + linkButtons(t.links) + '</div>' : '') + '</div>';
+      }).join('');
+      return '<section class="card pad stack"><h2>' + esc(g[0]) + '</h2><div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:22px">' + vids + '</div></section>';
+    }).join('');
+    return head('Training videos', 'Short how-to videos for you and your team. Come back any time.') + (groups || '<div class="card pad"><p class="empty">Training videos will appear here.</p></div>') +
+      '<p class="muted" style="margin:0;font-size:14px">Need help with something not covered here? Email <a href="mailto:hello@secondsethq.com">hello@secondsethq.com</a> or call <a href="tel:+14422919337">442-291-9337</a>.</p>';
+  };
+
+  VIEWS.logins = function () {
+    var rows = data.logins.map(function (l) {
+      return '<tr><td><strong>' + esc(l.service) + '</strong>' + (l.detail ? '<br><span class="muted" style="font-size:13px">' + esc(l.detail) + '</span>' : '') + '</td><td>' + esc(l.loginEmail || '') + '</td><td>' + esc(l.access) + '</td><td>' + (l.owner ? '<span class="chip">' + esc(l.owner) + '</span>' : '') + '</td><td style="font-size:13px" class="muted">' + esc(l.note) + '</td></tr>';
+    }).join('');
+    return head('Your accounts and logins', 'Every service your business runs on, which email logs in, and who has access.') +
+      '<div class="card pad vault"><div style="flex:1 1 420px;display:flex;gap:14px;align-items:flex-start"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#117997" stroke-width="2" aria-hidden="true" style="flex:none;margin-top:2px"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><div><strong>Your passwords are kept in your private Bitwarden vault, not on this page.</strong><br><span class="muted" style="font-size:14px">Open the vault to see or copy a password. Only you and the people you share it with can open it.</span></div></div>' +
+      (data.vaultUrl ? '<a class="btn" href="' + esc(data.vaultUrl) + '" target="_blank" rel="noopener noreferrer">Open my vault</a>' : '') + '</div>' +
+      '<section class="card pad stack" aria-labelledby="ac"><h2 id="ac">Accounts</h2>' + (rows ? '<div class="scroll"><table><thead><tr><th scope="col">Service</th><th scope="col">Logs in with</th><th scope="col">Who has access</th><th scope="col">Owner</th><th scope="col">Notes</th></tr></thead><tbody>' + rows + '</tbody></table></div>' : '<p class="empty">Nothing here yet.</p>') + '</section>';
+  };
+
+  VIEWS.reports = function () {
+    var cards = data.reports.map(function (r) {
+      return '<section class="card pad stack"><div class="meta">' + (r.period ? '<span class="lbl">' + esc(r.period) + '</span>' : '') + '</div><h2>' + esc(r.title) + '</h2>' + (r.summary ? '<p style="margin:0;white-space:pre-line;line-height:1.6;color:#3a302c">' + esc(r.summary) + '</p>' : '') + (r.links.length ? '<div class="actions">' + linkButtons(r.links, true) + '</div>' : '') + '</section>';
+    }).join('');
+    return head('Advertising reports', 'What your ads did, what we changed and what is next.') + (cards || '<div class="card pad"><p class="empty">Your first report will appear here.</p></div>');
+  };
+
+  /* ---------- behavior ---------- */
+  function wire() {
+    app.querySelectorAll('[data-file]').forEach(function (b) { b.addEventListener('click', function () { download(b); }); });
+    app.querySelectorAll('[data-done]').forEach(function (b) {
+      b.addEventListener('click', async function () {
+        b.disabled = true; b.textContent = 'Saving…';
+        var r = await api('todo_done', { body: { id: b.getAttribute('data-done') } });
+        if (r.status === 200) { var t = data.todos.find(function (x) { return x.id === b.getAttribute('data-done'); }); if (t) t.done = true; toast('Marked done. Thank you!'); render(); }
+        else { b.disabled = false; b.textContent = 'Mark done'; toast(r.body.message || 'Could not save. Try again.'); }
+      });
+    });
+    app.querySelectorAll('[data-yt]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var f = document.createElement('iframe');
+        f.src = 'https://www.youtube-nocookie.com/embed/' + b.getAttribute('data-yt') + '?autoplay=1&rel=0';
+        f.allow = 'autoplay; encrypted-media; picture-in-picture'; f.allowFullscreen = true; f.title = b.getAttribute('aria-label');
+        var box = document.createElement('div'); box.className = 'player'; box.appendChild(f); b.replaceWith(box);
+      });
+    });
+  }
+
+  async function download(btn) {
+    var id = btn.getAttribute('data-file'), m = data.fileMeta[id];
+    if (!m) return;
+    var label = btn.textContent; btn.disabled = true;
+    try {
+      var parts = [];
+      for (var i = 0; i < m.chunks; i++) {
+        btn.textContent = m.chunks > 1 ? 'Downloading ' + Math.round(i / m.chunks * 100) + '%' : 'Downloading…';
+        var q = '&id=' + encodeURIComponent(id) + '&n=' + i;
+        var res = preview
+          ? await fetch(API + '?action=admin_file' + q + '&clientId=' + encodeURIComponent((location.search.match(/[?&]preview=([a-z0-9-]+)/) || [])[1] || ''), { headers: { authorization: 'Bearer ' + (sessionStorage.getItem('ss_portal_admin_token') || '') } })
+          : await fetch(API + '?action=file' + q, { credentials: 'same-origin' });
+        if (!res.ok) throw new Error('download');
+        parts.push(await res.arrayBuffer());
+      }
+      var blob = new Blob(parts, { type: m.type || 'application/octet-stream' });
+      var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = m.name; document.body.appendChild(a); a.click();
+      setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 2000);
+    } catch (e) {
+      toast(e && e.message === 'download' ? 'That file could not be downloaded. Try again, or log in again.' : 'Download failed.');
+    }
+    btn.disabled = false; btn.textContent = label;
+  }
+
+  boot();
+})();
+</script>
+</body>
+</html>

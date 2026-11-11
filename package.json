@@ -2,7 +2,7 @@
   "name": "secondsethq-site",
   "private": true,
   "scripts": {
-    "test": "node --test netlify/functions/__tests__/connector.test.mjs"
+    "test": "node --test netlify/functions/__tests__/connector.test.mjs netlify/functions/__tests__/portal.test.mjs"
   },
   "dependencies": {
     "@netlify/blobs": "^11.1.1"

@@ -1,2 +1,2 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+# vCards are CRLF by spec (RFC 2426); line folding depends on it.
+*.vcf -text
